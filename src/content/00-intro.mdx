@@ -1,0 +1,22 @@
+---
+title: Introducción
+---
+# Docs Starter (Next.js + MDX + Tailwind)
+
+## Uso rápido
+```bash
+pnpm install
+pnpm ingest
+pnpm dev
+# abre http://localhost:3000
+```
+
+## Bootstrap (tokens de marca)
+```bash
+pnpm bootstrap --project=acme --domain=docs.acme.com --color=#0EA5E9
+```
+
+## Deploy (Vercel)
+- Configura wildcard DNS: `*.docs.tudominio.com` → `cname.vercel-dns.com`
+- Añade secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
+- Push a `main`: el workflow construye y despliega.

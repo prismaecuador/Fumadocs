@@ -1,0 +1,38 @@
+{
+  "name": "docs-starter",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "pnpm ingest && next build",
+    "start": "next start",
+    "ingest": "tsx scripts/ingest.ts",
+    "bootstrap": "tsx scripts/bootstrap-docs.ts project=$PROJECT domain=$DOMAIN color=$COLOR"
+  },
+  "dependencies": {
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/mdx": "^3.1.1",
+    "@mdx-js/react": "latest",
+    "fs-extra": "latest",
+    "globby": "latest",
+    "gray-matter": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@next/mdx": "latest",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "postcss": "latest",
+    "remark-gfm": "latest",
+    "tailwindcss": "^3.4.18",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

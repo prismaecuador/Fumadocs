@@ -1,0 +1,10 @@
+{
+  "title": "Acme Docs",
+  "domain": "docs.acme.com",
+  "sections": [
+    "Introducci\u00f3n",
+    "Arquitectura",
+    "API",
+    "Gu\u00edas"
+  ]
+}
