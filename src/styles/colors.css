@@ -1,0 +1,15 @@
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-500: #333333;
+
+  --color-background-primary: var(--color-white);
+  --color-text-primary: var(--color-black);
+  --color-text-muted: var(--color-gray-500);
+  --color-border: rgba(0, 0, 0, 0.08);
+
+  --focus-outline: rgba(0, 0, 0, 0.6);
+
+  --transition-duration: 0.3s;
+  --transition-easing: ease;
+}

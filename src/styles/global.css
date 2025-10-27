@@ -1,0 +1,14 @@
+@import "./colors.css";
+@import "./typography.css";
+@import "./layout.css";
+@import "./components.css";
+
+body {
+  transition:
+    background var(--transition-duration) var(--transition-easing),
+    color var(--transition-duration) var(--transition-easing);
+}
+
+::selection {
+  background: rgba(0, 0, 0, 0.08);
+}
