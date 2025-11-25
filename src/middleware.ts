@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Aplicar middleware a todas las rutas excepto archivos estáticos
-    '/((?!_next/static|_next/image|favicon.ico|public).*)',
+    // Aplicar middleware a todas las rutas excepto archivos estáticos y públicos
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.svg|.*\\.jpg|.*\\.jpeg).*)',
   ],
 }
