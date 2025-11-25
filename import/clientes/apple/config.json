@@ -1,0 +1,9 @@
+{
+  "projectName": "Apple Documentation",
+  "domain": "apple.helloprisma.com",
+  "secondaryColors": {
+    "highlight": "#555555",
+    "accent": "#A2AAAD",
+    "hover": "#FFFFFF"
+  }
+}
