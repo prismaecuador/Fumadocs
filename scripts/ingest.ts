@@ -115,12 +115,10 @@ export default function Page() {
 }
 
 async function generateNavigation(): Promise<Array<{ title: string; href: string }>> {
-  const nav: Array<{ title: string; href: string }> = [
-    { title: 'Introducción', href: '/' }
-  ]
+  const nav: Array<{ title: string; href: string }> = []
 
   const contentDirs = await fs.readdir(CONTENT)
-  const sortedDirs = contentDirs.filter(d => !d.startsWith('00-')).sort()
+  const sortedDirs = contentDirs.sort()
 
   for (const dir of sortedDirs) {
     const dirPath = path.join(CONTENT, dir)

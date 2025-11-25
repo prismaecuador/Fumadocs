@@ -1,14 +1,1 @@
-[
-  {
-    "title": "Introducción",
-    "href": "/",
-    "content": "Bienvenido a Fumadocs Fumadocs es un generador automático de sitios de documentación técnica. Con él puedes crear documentación profesional de forma rápida y sencilla. 🚀 Características principales Generación automática Las secciones se generan automáticamente desde carpetas Markdown a MDX Convierte Markdown a MDX con componentes React interactivos Búsqueda en tiempo real Búsqueda instantánea sin necesidad de backend Branding automático Personaliza colores y marca desde un archivo JSON Responsive Diseño moderno que funciona en todos los dispositivos Deploy automatizado CI/CD integrado con Vercel y GitHub Actions 📁 Cómo empezar 1. Crea una sección en 2. Agrega contenido con archivos 3. Ejecuta 4. Levanta el servidor con ¡Tu documentación estará lista en http://localhost:3000! 📚 Guía completa Para instrucciones detalladas, consulta: / Guía general del proyecto /import/README.md Guía de uso de secciones 🎯 Próximos pasos Crea tu primera sección: Edita : Ejecuta: ¡Eso es todo! Tu sección estará disponible en http://localhost:3000/mi seccion",
-    "section": "inicio"
-  },
-  {
-    "title": "Comenzar",
-    "href": "/getting-started",
-    "content": "Guía de Inicio Rápido Este es un ejemplo de cómo se ve una sección importada desde . Requisitos Node.js 18+ pnpm 8+ Instalación Desarrollo Luego abre http://localhost:3000 en tu navegador. Estructura de Carpetas src/app Páginas y rutas de la aplicación src/content Contenido MDX generado automáticamente src/components Componentes React reutilizables import/sections Carpetas con documentación a importar import/config.json Configuración de marca y colores Próximos Pasos 1. Agrega tus propias secciones en 2. Ejecuta para generar el contenido 3. Personaliza con tu marca",
-    "section": "getting-started"
-  }
-]
+[]
