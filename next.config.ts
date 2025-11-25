@@ -3,9 +3,7 @@ import remarkGfm from 'remark-gfm'
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
-  options: { 
-    remarkPlugins: [remarkGfm] 
-  },
+  remarkPlugins: [remarkGfm],
 })
 
 /** @type {import('next').NextConfig} */

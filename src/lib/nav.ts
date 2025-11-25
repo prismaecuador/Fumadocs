@@ -1,7 +1,10 @@
 export const nav = [
-  { title: 'Introducción', href: '/' },
-  { title: 'Arquitectura', href: '/arquitectura' },
-  { title: 'API', href: '/api' },
-  { title: 'Guías', href: '/guias' },
-  { title: 'Changelog', href: '/changelog' },
+  {
+    "title": "Introducción",
+    "href": "/"
+  },
+  {
+    "title": "Comenzar",
+    "href": "/getting-started"
+  }
 ]
