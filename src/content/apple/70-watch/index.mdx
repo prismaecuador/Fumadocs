@@ -1,0 +1,33 @@
+# Apple Watch - Tu Salud en la Muñeca
+
+Apple Watch te mantiene conectado, informado y en forma.
+
+## Características de salud
+
+- **Sensor de corazón** - Monitoreo continuo de tu ritmo cardíaco
+- **Detección de caídas** - Te ayuda en emergencias
+- **Monitoreo de oxígeno** - Mide el nivel de oxígeno en sangre
+- **ECG** - Electrocardiograma directamente en tu muñeca
+- **Ciclo menstrual** - Registro de salud para mujeres
+
+## Actividad y fitness
+
+- Rastreo automático de movimiento
+- Entrenamientos especializados
+- Competencias con amigos
+
+## Conectividad
+
+- Llamadas y mensajes
+- Pagos contactless con Apple Pay
+- Siri en tu muñeca
+
+## Modelos disponibles
+
+- **Apple Watch Ultra** - Para aventureros
+- **Apple Watch Series 9** - Lo último en tecnología
+- **Apple Watch SE** - Asequible y potente
+
+## Personalización
+
+Cientos de modelos y correas para adaptar tu Watch a tu estilo.

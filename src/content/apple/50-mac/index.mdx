@@ -1,0 +1,26 @@
+# Mac - Potencia para Creativos
+
+Las computadoras Mac están diseñadas para llevar tu creatividad al siguiente nivel.
+
+## La familia Mac
+
+- **MacBook Pro** - Para profesionales exigentes
+- **MacBook Air** - Delgado, ligero y poderoso
+- **iMac** - Todo en uno hermoso
+- **Mac Studio** - Potencia máxima para profesionales
+- **Mac mini** - Pequeño pero poderoso
+
+## Chip Apple Silicon
+
+Los chips de Apple ofrecen:
+- Rendimiento sin precedentes
+- Eficiencia energética
+- Integración perfecta con el software
+
+## Ecosistema macOS
+
+Acceso a miles de aplicaciones diseñadas específicamente para Mac. Sincronización perfecta con iPhone, iPad y otros dispositivos.
+
+## Empezando con Mac
+
+Fácil de configurar, intuitivo de usar, y diseñado para funcionar sin problemas.

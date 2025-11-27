@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "title": "index",
+    "href": "/10-airpods",
+    "content": "AirPods Audio de Calidad Superior Los AirPods ofrecen audio inalámbrico sin complicaciones. Características principales Audio adaptativo Cambia automáticamente entre modos Cancelación activa de ruido Escucha lo que importa Sonido espacial Audio envolvente como en cine Batería de larga duración Escucha todo el día Carga rápida 5 minutos de carga = una hora de audio Modelos AirPods Pro Lo mejor en audio inalámbrico con cancelación activa AirPods Max Audiófonos over ear con audio espacial inmersivo AirPods (3era generación) Audio de calidad a un precio accesible Controles fáciles Toca para controlar música Usa Siri con tu voz Controla desde tu iPhone, Mac o iPad Ecosistema integrado Se conectan automáticamente con todos tus dispositivos Apple.",
+    "section": "10-airpods"
+  },
+  {
+    "title": "index",
+    "href": "/20-inicio",
+    "content": "Bienvenido a Apple Descubre el mundo de innovación de Apple. Desde dispositivos revolucionarios hasta experiencias transformadoras. Nuestros Productos iPhone El smartphone más avanzado del mundo Mac Computadoras potentes para creativos y profesionales iPad La mejor tablet para trabajar y crear Apple Watch Tu salud y conectividad en la muñeca AirPods Audio de calidad superior sin cables Por qué elegir Apple Diseño elegante, tecnología avanzada y ecosistema integrado que funciona de manera perfecta en todos tus dispositivos.",
+    "section": "20-inicio"
+  },
+  {
+    "title": "index",
+    "href": "/30-ipad",
+    "content": "iPad La Mejor Tablet del Mundo iPad te permite crear, aprender y entretenerte de formas nuevas. Modelos de iPad iPad Pro La tablet más poderosa con pantalla Liquid Retina XDR iPad Air Rendimiento increíble en un diseño versátil iPad Simplicidad y potencia para todos iPad mini Portabilidad con poder completo Accesorios esenciales Apple Pencil Precisión perfecta para dibujar y escribir Magic Keyboard Transforma tu iPad en una computadora Smart Folio Protección elegante Aplicaciones con propósito App Store ofrece millones de aplicaciones diseñadas para aprovechar el poder de iPad. Productividad y creatividad Trabaja en documentos, crea diseños, edita videos y más, todo en tu iPad.",
+    "section": "30-ipad"
+  },
+  {
+    "title": "index",
+    "href": "/40-iphone",
+    "content": "iPhone El Smartphone Más Avanzado El iPhone combina hardware y software para crear una experiencia sin igual. Características principales Pantalla Super Retina XDR Colores vibrantes y brillo excepcional Chip A17 Pro El procesador más rápido en un smartphone Sistema de cámaras avanzado Fotografía y videografía profesional Batería de larga duración Todo el día con una carga Modelos disponibles iPhone 15 Pro Diseño de titanio premium con cámara de 48MP iPhone 15 Innovación accesible para todos Conéctate con otros productos Tu iPhone funciona perfecto con Mac, iPad, Apple Watch y AirPods.",
+    "section": "40-iphone"
+  },
+  {
+    "title": "index",
+    "href": "/50-mac",
+    "content": "Mac Potencia para Creativos Las computadoras Mac están diseñadas para llevar tu creatividad al siguiente nivel. La familia Mac MacBook Pro Para profesionales exigentes MacBook Air Delgado, ligero y poderoso iMac Todo en uno hermoso Mac Studio Potencia máxima para profesionales Mac mini Pequeño pero poderoso Chip Apple Silicon Los chips de Apple ofrecen: Rendimiento sin precedentes Eficiencia energética Integración perfecta con el software Ecosistema macOS Acceso a miles de aplicaciones diseñadas específicamente para Mac. Sincronización perfecta con iPhone, iPad y otros dispositivos. Empezando con Mac Fácil de configurar, intuitivo de usar, y diseñado para funcionar sin problemas.",
+    "section": "50-mac"
+  },
+  {
+    "title": "index",
+    "href": "/60-soporte",
+    "content": "Soporte Apple Estamos aquí para ayudarte con cualquier pregunta o problema. Opciones de soporte Apple Support Online Chatea con especialistas directamente desde tu dispositivo Genius Bar Visita una tienda Apple para ayuda en persona AppleCare Cobertura y soporte extendido para tu dispositivo Recursos útiles Tutoriales en video Comunidad de usuarios Apple Documentación oficial Guías de producto Solución de problemas común Mi dispositivo no enciende 1. Conecta a un cargador certificado 2. Espera 10 15 minutos 3. Si aún no enciende, contacta a soporte Problema de conectividad 1. Reinicia tu dispositivo 2. Olvida la red WiFi y reconéctate 3. Reinicia tu router Rendimiento lento 1. Libera espacio en almacenamiento 2. Cierra aplicaciones en segundo plano 3. Actualiza a la última versión del sistema Contacto Teléfono: 1 800 MY APPLE Chat: support.apple.com Email: support@apple.com Ubicaciones: apple.com/retail",
+    "section": "60-soporte"
+  },
+  {
+    "title": "index",
+    "href": "/70-watch",
+    "content": "Apple Watch Tu Salud en la Muñeca Apple Watch te mantiene conectado, informado y en forma. Características de salud Sensor de corazón Monitoreo continuo de tu ritmo cardíaco Detección de caídas Te ayuda en emergencias Monitoreo de oxígeno Mide el nivel de oxígeno en sangre ECG Electrocardiograma directamente en tu muñeca Ciclo menstrual Registro de salud para mujeres Actividad y fitness Rastreo automático de movimiento Entrenamientos especializados Competencias con amigos Conectividad Llamadas y mensajes Pagos contactless con Apple Pay Siri en tu muñeca Modelos disponibles Apple Watch Ultra Para aventureros Apple Watch Series 9 Lo último en tecnología Apple Watch SE Asequible y potente Personalización Cientos de modelos y correas para adaptar tu Watch a tu estilo.",
+    "section": "70-watch"
+  }
+]

@@ -1,0 +1,45 @@
+# Soporte Apple
+
+Estamos aquí para ayudarte con cualquier pregunta o problema.
+
+## Opciones de soporte
+
+### Apple Support Online
+Chatea con especialistas directamente desde tu dispositivo
+
+### Genius Bar
+Visita una tienda Apple para ayuda en persona
+
+### AppleCare
+Cobertura y soporte extendido para tu dispositivo
+
+## Recursos útiles
+
+- Tutoriales en video
+- Comunidad de usuarios Apple
+- Documentación oficial
+- Guías de producto
+
+## Solución de problemas común
+
+### Mi dispositivo no enciende
+1. Conecta a un cargador certificado
+2. Espera 10-15 minutos
+3. Si aún no enciende, contacta a soporte
+
+### Problema de conectividad
+1. Reinicia tu dispositivo
+2. Olvida la red WiFi y reconéctate
+3. Reinicia tu router
+
+### Rendimiento lento
+1. Libera espacio en almacenamiento
+2. Cierra aplicaciones en segundo plano
+3. Actualiza a la última versión del sistema
+
+## Contacto
+
+- **Teléfono:** 1-800-MY-APPLE
+- **Chat:** support.apple.com
+- **Email:** support@apple.com
+- **Ubicaciones:** apple.com/retail

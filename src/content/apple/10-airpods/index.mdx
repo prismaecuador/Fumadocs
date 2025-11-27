@@ -1,0 +1,32 @@
+# AirPods - Audio de Calidad Superior
+
+Los AirPods ofrecen audio inalámbrico sin complicaciones.
+
+## Características principales
+
+- **Audio adaptativo** - Cambia automáticamente entre modos
+- **Cancelación activa de ruido** - Escucha lo que importa
+- **Sonido espacial** - Audio envolvente como en cine
+- **Batería de larga duración** - Escucha todo el día
+- **Carga rápida** - 5 minutos de carga = una hora de audio
+
+## Modelos
+
+### AirPods Pro
+Lo mejor en audio inalámbrico con cancelación activa
+
+### AirPods Max
+Audiófonos over-ear con audio espacial inmersivo
+
+### AirPods (3era generación)
+Audio de calidad a un precio accesible
+
+## Controles fáciles
+
+- Toca para controlar música
+- Usa Siri con tu voz
+- Controla desde tu iPhone, Mac o iPad
+
+## Ecosistema integrado
+
+Se conectan automáticamente con todos tus dispositivos Apple.

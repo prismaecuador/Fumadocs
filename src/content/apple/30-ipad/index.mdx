@@ -1,0 +1,31 @@
+# iPad - La Mejor Tablet del Mundo
+
+iPad te permite crear, aprender y entretenerte de formas nuevas.
+
+## Modelos de iPad
+
+### iPad Pro
+La tablet más poderosa con pantalla Liquid Retina XDR
+
+### iPad Air
+Rendimiento increíble en un diseño versátil
+
+### iPad
+Simplicidad y potencia para todos
+
+### iPad mini
+Portabilidad con poder completo
+
+## Accesorios esenciales
+
+- **Apple Pencil** - Precisión perfecta para dibujar y escribir
+- **Magic Keyboard** - Transforma tu iPad en una computadora
+- **Smart Folio** - Protección elegante
+
+## Aplicaciones con propósito
+
+App Store ofrece millones de aplicaciones diseñadas para aprovechar el poder de iPad.
+
+## Productividad y creatividad
+
+Trabaja en documentos, crea diseños, edita videos y más, todo en tu iPad.
