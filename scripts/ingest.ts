@@ -73,13 +73,13 @@ async function importFromSections() {
 
       const parsed = matter(raw)
 
-      // Procesar rutas de imágenes - convertir a rutas públicas
+      // Procesar rutas de imágenes - convertir a rutas públicas del cliente
       let content = parsed.content
-      // Reemplazar rutas de imágenes relativas con rutas de /public/images
+      // Reemplazar rutas de imágenes relativas con rutas de /public/{cliente}/
       // Busca patrones como: ![alt](../folder/image.png) o ![alt](folder/image.png)
-      content = content.replace(/!\[([^\]]*)\]\((?!https?|\/)[^)]*\/([^/)]+)\)/g, '![$1](/images/$2)')
+      content = content.replace(/!\[([^\]]*)\]\((?!https?|\/)[^)]*\/([^/)]+)\)/g, `![$1](/${TARGET_CLIENT}/$2)`)
       // También maneja rutas sin carpeta padre
-      content = content.replace(/!\[([^\]]*)\]\(([^/)]+\.[a-z]+)\)/g, '![$1](/images/$2)')
+      content = content.replace(/!\[([^\]]*)\]\(([^/)]+\.[a-z]+)\)/g, `![$1](/${TARGET_CLIENT}/$2)`)
 
       // Solo mantener frontmatter si existe, sin agregar title automático
       const mdxContent = matter.stringify(content, parsed.data || {})
@@ -105,7 +105,7 @@ async function generatePageFiles() {
     if (!stat.isDirectory()) continue
 
     const sectionName = dir.replace(/^\d+-/, '')
-    const appDir = path.join(APP, sectionName)
+    const appDir = path.join(APP, TARGET_CLIENT, sectionName)
     const pageFile = path.join(appDir, 'page.tsx')
 
     if (fs.existsSync(pageFile)) continue
@@ -133,7 +133,7 @@ export default function Page() {
 `
 
     await fs.outputFile(pageFile, pageContent)
-    console.log(`• Página generada → src/app/${sectionName}/page.tsx`)
+    console.log(`• Página generada → src/app/${TARGET_CLIENT}/${sectionName}/page.tsx`)
   }
 }
 
@@ -160,7 +160,7 @@ async function generateNavigation(): Promise<Array<{ title: string; href: string
       .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Primera letra mayúscula
       .join(' ')
 
-    const href = '/' + sectionName
+    const href = '/' + TARGET_CLIENT + '/' + sectionName
 
     nav.push({ title: generatedTitle, href })
   }

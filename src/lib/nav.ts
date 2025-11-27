@@ -1,30 +1,30 @@
 export const nav = [
   {
     "title": "Airpods",
-    "href": "/airpods"
+    "href": "/apple/airpods"
   },
   {
     "title": "Inicio",
-    "href": "/inicio"
+    "href": "/apple/inicio"
   },
   {
     "title": "Ipad",
-    "href": "/ipad"
+    "href": "/apple/ipad"
   },
   {
     "title": "Iphone",
-    "href": "/iphone"
+    "href": "/apple/iphone"
   },
   {
     "title": "Mac",
-    "href": "/mac"
+    "href": "/apple/mac"
   },
   {
     "title": "Soporte",
-    "href": "/soporte"
+    "href": "/apple/soporte"
   },
   {
     "title": "Watch",
-    "href": "/watch"
+    "href": "/apple/watch"
   }
 ]
