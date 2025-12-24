@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { nav } from "@/lib/nav";
 import Search from "@/components/search";
 import LogoClient from "@/components/LogoClient";
+import Navigation from "@/components/Navigation";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -14,13 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <LogoClient />
             </div>
             <Search />
-            <nav className="nav">
-              {nav.map((item) => (
-                <Link key={item.href} href={item.href} className="nav-link">
-                  {item.title}
-                </Link>
-              ))}
-            </nav>
+            <Navigation items={nav} />
           </aside>
           <main className="page-content">
             <article className="content-article">{children}</article>

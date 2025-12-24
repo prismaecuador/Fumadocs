@@ -15,6 +15,8 @@ const APP = path.join(SRC, 'src', 'app')
 const PUBLIC_DIR = path.join(SRC, 'public')
 const SECTIONS_DIR = path.join(CLIENTS_DIR, TARGET_CLIENT, 'sections')
 const CONFIG_FILE = path.join(CLIENTS_DIR, TARGET_CLIENT, 'config.json')
+const CLIENT_PUBLIC_SRC = path.join(CLIENTS_DIR, TARGET_CLIENT, 'public')
+const CLIENT_PUBLIC_DEST = path.join(PUBLIC_DIR, TARGET_CLIENT)
 
 function getDefaultClient(): string {
   if (!fs.existsSync(CLIENTS_DIR)) {
@@ -35,6 +37,23 @@ type BrandConfig = {
   }
 }
 
+type NavItem = {
+  title: string
+  href: string
+  items?: NavItem[]
+}
+
+// Función para convertir nombres a slugs URL-safe
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD') // Descomponer caracteres con tildes
+    .replace(/[\u0300-\u036f]/g, '') // Eliminar marcas diacríticas (tildes)
+    .replace(/[^a-z0-9\s-]/g, '') // Eliminar caracteres especiales
+    .trim()
+    .replace(/\s+/g, '-') // Reemplazar espacios con guiones
+    .replace(/-+/g, '-') // Reemplazar múltiples guiones con uno solo
+}
 
 async function readBrandConfig(): Promise<BrandConfig | null> {
   if (!fs.existsSync(CONFIG_FILE)) return null
@@ -64,8 +83,14 @@ async function importFromSections() {
 
     if (markdownFiles.length === 0) continue
 
-    const sectionContentDir = path.join(CONTENT, `${sectionNumber.toString().padStart(2, '0')}-${sectionName}`)
+    // Usar slug para el nombre de carpeta, pero guardar el nombre original
+    const sectionSlug = slugify(sectionName)
+    const sectionContentDir = path.join(CONTENT, `${sectionNumber.toString().padStart(2, '0')}-${sectionSlug}`)
     await fs.ensureDir(sectionContentDir)
+
+    // Si no hay index.md, usar el primer archivo como index
+    const hasIndex = markdownFiles.some(f => f === 'index.md' || f === 'index.mdx')
+    const firstFile = markdownFiles[0]
 
     for (const mdFile of markdownFiles) {
       const mdPath = path.join(sectionPath, mdFile)
@@ -81,14 +106,38 @@ async function importFromSections() {
       // También maneja rutas sin carpeta padre
       content = content.replace(/!\[([^\]]*)\]\(([^/)]+\.[a-z]+)\)/g, `![$1](/${TARGET_CLIENT}/$2)`)
 
-      // Solo mantener frontmatter si existe, sin agregar title automático
-      const mdxContent = matter.stringify(content, parsed.data || {})
+      // Agregar metadata con nombres originales para mostrar en UI
+      const isIndexFile = mdFile === 'index.md' || mdFile === 'index.mdx'
+      const fileNameWithoutExt = mdFile.replace(/\.(md|mdx)$/, '')
+
+      const metadata = {
+        ...parsed.data,
+        // Solo agregar title si no existe uno
+        title: parsed.data.title || (isIndexFile ? sectionName : fileNameWithoutExt),
+        // Guardar el nombre original de la sección para referencia
+        _sectionOriginalName: sectionName,
+        _fileOriginalName: fileNameWithoutExt
+      }
+
+      const mdxContent = matter.stringify(content, metadata)
 
       const mdxFileName = mdFile.replace(/\.md$/, '.mdx')
       const mdxPath = path.join(sectionContentDir, mdxFileName)
 
       await fs.outputFile(mdxPath, mdxContent)
       console.log(`• ${sectionName}/${mdFile} → src/content/${TARGET_CLIENT}/${path.basename(sectionContentDir)}/${mdxFileName}`)
+
+      // Si este es el primer archivo y no hay index, crear una copia como index.mdx
+      if (!hasIndex && mdFile === firstFile) {
+        const indexMetadata = {
+          ...metadata,
+          title: parsed.data.title || sectionName
+        }
+        const indexContent = matter.stringify(content, indexMetadata)
+        const indexPath = path.join(sectionContentDir, 'index.mdx')
+        await fs.outputFile(indexPath, indexContent)
+        console.log(`• ${sectionName}/${mdFile} → src/content/${TARGET_CLIENT}/${path.basename(sectionContentDir)}/index.mdx (auto-generado)`)
+      }
     }
 
     sectionNumber += 10
@@ -106,24 +155,18 @@ async function generatePageFiles() {
 
     const sectionName = dir.replace(/^\d+-/, '')
     const appDir = path.join(APP, TARGET_CLIENT, sectionName)
-    const pageFile = path.join(appDir, 'page.tsx')
-
-    if (fs.existsSync(pageFile)) continue
 
     await fs.ensureDir(appDir)
 
     const mdxFiles = await fs.readdir(dirPath)
     const indexFile = mdxFiles.find(f => f === 'index.mdx' || f === 'index.md')
 
-    if (!indexFile) {
-      const firstMd = mdxFiles.find(f => f.endsWith('.mdx') || f.endsWith('.md'))
-      if (!firstMd) continue
-    }
+    // Generar página principal de la sección (index)
+    if (indexFile) {
+      const pageFile = path.join(appDir, 'page.tsx')
+      const contentPath = `@/content/${TARGET_CLIENT}/${dir}/${indexFile}`
 
-    const importName = indexFile ? 'Index' : mdxFiles.find(f => f.endsWith('.mdx') || f.endsWith('.md'))?.replace(/\.(mdx|md)$/, '')
-    const contentPath = `@/content/${TARGET_CLIENT}/${dir}/${indexFile || ''}`
-
-    const pageContent = `"use client";
+      const pageContent = `"use client";
 
 import MDX from "${contentPath}";
 
@@ -132,13 +175,40 @@ export default function Page() {
 }
 `
 
-    await fs.outputFile(pageFile, pageContent)
-    console.log(`• Página generada → src/app/${TARGET_CLIENT}/${sectionName}/page.tsx`)
+      await fs.outputFile(pageFile, pageContent)
+      console.log(`• Página generada → src/app/${TARGET_CLIENT}/${sectionName}/page.tsx`)
+    }
+
+    // Generar páginas para subsecciones
+    const subSections = mdxFiles.filter(f => f.endsWith('.mdx') && f !== 'index.mdx')
+
+    for (const subFile of subSections) {
+      const subFileName = subFile.replace(/\.mdx$/, '')
+      const subSlug = slugify(subFileName)
+      const subAppDir = path.join(appDir, subSlug)
+      const subPageFile = path.join(subAppDir, 'page.tsx')
+
+      await fs.ensureDir(subAppDir)
+
+      const contentPath = `@/content/${TARGET_CLIENT}/${dir}/${subFile}`
+
+      const pageContent = `"use client";
+
+import MDX from "${contentPath}";
+
+export default function Page() {
+  return <MDX />;
+}
+`
+
+      await fs.outputFile(subPageFile, pageContent)
+      console.log(`• Subsección generada → src/app/${TARGET_CLIENT}/${sectionName}/${subSlug}/page.tsx`)
+    }
   }
 }
 
-async function generateNavigation(): Promise<Array<{ title: string; href: string }>> {
-  const nav: Array<{ title: string; href: string }> = []
+async function generateNavigation(): Promise<NavItem[]> {
+  const nav: NavItem[] = []
 
   const contentDirs = await fs.readdir(CONTENT)
   const sortedDirs = contentDirs.sort()
@@ -152,23 +222,52 @@ async function generateNavigation(): Promise<Array<{ title: string; href: string
     const indexPath = path.join(dirPath, 'index.mdx')
     if (!fs.existsSync(indexPath)) continue
 
-    // Generar título desde el nombre de la carpeta
-    const sectionName = dir.replace(/^\d+-/, '') // Remover prefijo numérico
-    const generatedTitle = sectionName
-      .replace(/[-_]/g, ' ') // Reemplazar guiones y guiones bajos con espacios
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Primera letra mayúscula
-      .join(' ')
+    // Leer el título original del frontmatter del index
+    const indexContent = await fs.readFile(indexPath, 'utf8')
+    const indexParsed = matter(indexContent)
+    const sectionTitle = indexParsed.data.title || dir.replace(/^\d+-/, '')
 
+    const sectionName = dir.replace(/^\d+-/, '') // Remover prefijo numérico (slug)
     const href = '/' + TARGET_CLIENT + '/' + sectionName
 
-    nav.push({ title: generatedTitle, href })
+    // Buscar subsecciones (archivos .mdx que NO sean index.mdx)
+    const mdxFiles = await fs.readdir(dirPath)
+    const subSections = mdxFiles
+      .filter(f => f.endsWith('.mdx') && f !== 'index.mdx')
+      .sort()
+
+    const navItem: NavItem = {
+      title: sectionTitle,
+      href: href
+    }
+
+    // Si hay subsecciones, agregarlas
+    if (subSections.length > 0) {
+      navItem.items = []
+
+      for (const subFile of subSections) {
+        const subFilePath = path.join(dirPath, subFile)
+        const subContent = await fs.readFile(subFilePath, 'utf8')
+        const subParsed = matter(subContent)
+
+        const subTitle = subParsed.data.title || subFile.replace(/\.mdx$/, '')
+        const subSlug = slugify(subFile.replace(/\.mdx$/, ''))
+        const subHref = `${href}/${subSlug}`
+
+        navItem.items.push({
+          title: subTitle,
+          href: subHref
+        })
+      }
+    }
+
+    nav.push(navItem)
   }
 
   return nav
 }
 
-async function updateNavFile(nav: Array<{ title: string; href: string }>) {
+async function updateNavFile(nav: NavItem[]) {
   const navContent = `export const nav = ${JSON.stringify(nav, null, 2 )}
 `
   await fs.outputFile(path.join(SRC, 'src', 'lib', 'nav.ts'), navContent)
@@ -176,16 +275,28 @@ async function updateNavFile(nav: Array<{ title: string; href: string }>) {
 }
 
 async function applyBranding(config: BrandConfig) {
+  // Actualizar Tailwind config
   const tailwindPath = path.join(SRC, 'tailwind.config.ts')
   const tailwindContent = await fs.readFile(tailwindPath, 'utf8')
 
-  // Reemplazar color secundario highlight
-  const updatedContent = tailwindContent.replace(
+  const updatedTailwind = tailwindContent.replace(
     /colors:\s*{\s*brand:\s*{\s*DEFAULT:\s*['"]#[0-9A-Fa-f]{6}['"][^}]*}\s*}/,
     `colors: { brand: { DEFAULT: '${config.secondaryColors.highlight}', accent: '${config.secondaryColors.accent}', hover: '${config.secondaryColors.hover}' } }`
   )
 
-  await fs.outputFile(tailwindPath, updatedContent)
+  await fs.outputFile(tailwindPath, updatedTailwind)
+
+  // Actualizar variables CSS en colors.css
+  const colorsPath = path.join(SRC, 'src', 'styles', 'colors.css')
+  const colorsContent = await fs.readFile(colorsPath, 'utf8')
+
+  let updatedColors = colorsContent
+    .replace(/--color-brand:\s*#[0-9A-Fa-f]{6};/, `--color-brand: ${config.secondaryColors.highlight};`)
+    .replace(/--color-brand-accent:\s*#[0-9A-Fa-f]{6};/, `--color-brand-accent: ${config.secondaryColors.accent};`)
+    .replace(/--color-brand-hover:\s*#[0-9A-Fa-f]{6};/, `--color-brand-hover: ${config.secondaryColors.hover};`)
+
+  await fs.outputFile(colorsPath, updatedColors)
+
   console.log(`• Colores de marca aplicados`)
   console.log(`  - highlight: ${config.secondaryColors.highlight}`)
   console.log(`  - accent: ${config.secondaryColors.accent}`)
@@ -264,6 +375,19 @@ async function buildSearchIndex(routeMap: RouteMap) {
   console.log('• Índice de búsqueda → public/search-index.json')
 }
 
+async function copyPublicAssets() {
+  if (!fs.existsSync(CLIENT_PUBLIC_SRC)) {
+    console.log('⚠️  No se encontraron assets públicos para copiar')
+    return
+  }
+
+  await fs.ensureDir(CLIENT_PUBLIC_DEST)
+  await fs.copy(CLIENT_PUBLIC_SRC, CLIENT_PUBLIC_DEST, { overwrite: true })
+
+  const files = await fs.readdir(CLIENT_PUBLIC_SRC)
+  console.log(`• ${files.length} archivos copiados → public/${TARGET_CLIENT}/`)
+}
+
 async function main() {
   await fs.ensureDir(CONTENT)
 
@@ -272,8 +396,12 @@ async function main() {
   // Leer configuración de branding
   const brandConfig = await readBrandConfig()
 
+  // Copiar assets públicos del cliente
+  console.log('🖼️  Copiando assets públicos...')
+  await copyPublicAssets()
+
   // Importar secciones desde /import/clientes/{cliente}/sections
-  console.log('📂 Importando secciones...')
+  console.log('\n📂 Importando secciones...')
   await importFromSections()
 
   console.log('\n📄 Generando páginas automáticas...')

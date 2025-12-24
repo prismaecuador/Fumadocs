@@ -1,15 +1,14 @@
-@font-face {
-  font-family: "Audi Type";
-  src: local("Audi Type"), local("AudiType");
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 html {
   font-size: 16px;
 }
 
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1rem;
   line-height: 1.6;
   color: var(--color-text-primary);
@@ -70,6 +69,26 @@ a:focus-visible {
   color: var(--color-brand-primary, #3B82F6);
   border-bottom-color: var(--color-brand-primary, #3B82F6);
   opacity: 0.8;
+}
+
+/* Quitar borde inferior de links de navegación y logo */
+.nav-link,
+.nav-link-button,
+.nav-sublink,
+.page-brand a {
+  border-bottom: none !important;
+}
+
+.nav-link:hover,
+.nav-link-button:hover,
+.nav-sublink:hover,
+.page-brand a:hover,
+.nav-link:focus-visible,
+.nav-link-button:focus-visible,
+.nav-sublink:focus-visible,
+.page-brand a:focus-visible {
+  border-bottom: none !important;
+  opacity: 1;
 }
 
 code {

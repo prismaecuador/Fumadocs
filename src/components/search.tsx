@@ -111,22 +111,12 @@ export default function Search() {
   return (
     <div className="page-search" ref={containerRef}>
       <form className="search-control" role="search" onSubmit={handleSubmit}>
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          className="search-icon"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="currentColor"
-            d="M15.5 14h-.79l-.28-.27a6 6 0 1 0-.71.71l.27.28v.79l4.25 4.25a1 1 0 0 0 1.42-1.42L15.5 14Zm-5 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"
-          />
-        </svg>
+        <svg width="28" height="28" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"><title>Search in guidelines</title><path d="M42,42 L29,29 L42,42 Z M32.5,20 C32.5,27.6 26.8,32.5 20,32.5 C13.1,32.5 7.5,26.9 7.5,20 C7.5,13.1 13.1,7.5 20,7.5 C26.9,7.5 32.5,13.1 32.5,20 Z" stroke="rgb(184, 184, 185)" stroke-width="1" fill="none" fill-rule="evenodd"></path></svg>
         <input
           id="sidebar-search"
           type="search"
-          placeholder="Buscar en la documentación"
-          aria-label="Buscar en la documentación"
+          placeholder="Buscar"
+          aria-label="Buscar"
           className="search-input"
           value={query}
           onChange={(event) => {

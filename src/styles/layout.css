@@ -27,7 +27,7 @@ body {
   gap: 48px;
   background: var(--color-gray-500);
   color: var(--color-white);
-  padding: 48px 32px;
+  padding: 55px 0px;
   z-index: 2;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
   overflow-y: auto;
@@ -43,7 +43,8 @@ body {
 
 .page-brand {
   display: flex;
-  justify-content: center;
+  justify-content:left;
+  padding: 0px 20px;
   align-items: center;
 }
 

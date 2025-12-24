@@ -1,0 +1,9 @@
+{
+  "projectName": "Partner Gym",
+  "domain": "partnergym.helloprisma.com",
+  "secondaryColors": {
+    "highlight": "#D6F800",
+    "accent": "#EFEFEF",
+    "hover": "#EFEFEF"
+  }
+}

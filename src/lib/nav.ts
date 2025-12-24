@@ -1,30 +1,26 @@
 export const nav = [
   {
-    "title": "Airpods",
-    "href": "/apple/airpods"
+    "title": "Sección 1",
+    "href": "/partner-gym/seccion-1",
+    "items": [
+      {
+        "title": "Branding 2d3ac768aa2980918e37c02e89edc8f0",
+        "href": "/partner-gym/seccion-1/branding-2d3ac768aa2980918e37c02e89edc8f0"
+      }
+    ]
   },
   {
-    "title": "Inicio",
-    "href": "/apple/inicio"
-  },
-  {
-    "title": "Ipad",
-    "href": "/apple/ipad"
-  },
-  {
-    "title": "Iphone",
-    "href": "/apple/iphone"
-  },
-  {
-    "title": "Mac",
-    "href": "/apple/mac"
-  },
-  {
-    "title": "Soporte",
-    "href": "/apple/soporte"
-  },
-  {
-    "title": "Watch",
-    "href": "/apple/watch"
+    "title": "Sección 2",
+    "href": "/partner-gym/seccion-2",
+    "items": [
+      {
+        "title": "Hoodies y ropa",
+        "href": "/partner-gym/seccion-2/hoodies-y-ropa"
+      },
+      {
+        "title": "Misión y Visión 2d3ac768aa29805bbb1bf19124e6ba04",
+        "href": "/partner-gym/seccion-2/mision-y-vision-2d3ac768aa29805bbb1bf19124e6ba04"
+      }
+    ]
   }
 ]
