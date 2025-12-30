@@ -20,6 +20,15 @@ export function middleware(request: NextRequest) {
     // partnergym.helloprisma.com → partnergym
     // aurora.helloprisma.com → aurora
     clientName = parts[0]
+
+    // Si la URL no empieza con el cliente, reescribir
+    // aurora.helloprisma.com/ → aurora.helloprisma.com/aurora
+    // aurora.helloprisma.com/partner-gym/... → aurora.helloprisma.com/aurora
+    if (pathname === '/' || !pathname.startsWith(`/${clientName}`)) {
+      const url = request.nextUrl.clone()
+      url.pathname = `/${clientName}${pathname === '/' ? '' : pathname}`
+      return NextResponse.rewrite(url)
+    }
   } else if (parts.length === 2) {
     // Si es solo helloprisma.com (sin subdominio), usar partner-gym
     clientName = 'partner-gym'
