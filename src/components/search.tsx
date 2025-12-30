@@ -135,10 +135,10 @@ export default function Search() {
               className="search-result"
               onClick={() => handleSelect(result.href)}
             >
-              <span className="search-result-inline">
-                <span className="search-result-page">{result.title}</span>
-                <span className="search-result-snippet">{result.snippet}</span>
-              </span>
+              <div className="search-result-content">
+                <div className="search-result-title">{result.title}</div>
+                <div className="search-result-snippet">{result.snippet}</div>
+              </div>
             </button>
           ))}
         </div>

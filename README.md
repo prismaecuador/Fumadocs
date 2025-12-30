@@ -1,13 +1,14 @@
-# 📚 Fumadocs - Generador Automático de Documentación
+# 📚 Fumadocs - Generador Automático de Documentación Multi-Cliente
 
-Fumadocs es un generador automático de sitios de documentación técnica construido con Next.js, MDX y Tailwind CSS.
+Fumadocs es un generador automático de sitios de documentación técnica construido con Next.js, MDX y Tailwind CSS. Diseñado para soportar múltiples clientes con subdominios independientes.
 
 ## 🚀 Características
 
-- ✨ **Generación automática de secciones** desde carpetas en `/import/sections`
+- ✨ **Multi-cliente**: Soporta múltiples clientes con subdominios independientes
+- 🌐 **Subdominios personalizados**: Cada cliente en `cliente.helloprisma.com`
 - 📄 **Conversión automática** de Markdown a MDX
 - 🔄 **Generación automática** de páginas y navegación
-- 🎨 **Branding automático** desde archivo de configuración JSON
+- 🎨 **Branding personalizado** por cliente (colores, logos)
 - 🔍 **Búsqueda en tiempo real** sin backend
 - 📱 **Diseño responsivo** y moderno
 - 🎯 **Deploy automatizado** a Vercel con GitHub Actions
@@ -25,55 +26,107 @@ Fumadocs es un generador automático de sitios de documentación técnica constr
 pnpm install
 ```
 
-### 2. Crear tu primera sección
+### 2. Crear tu primer cliente
+
+**Opción A: Usar el script automático (Recomendado)**
 
 ```bash
-mkdir import/sections/introduccion
-cat > import/sections/introduccion/index.md << 'EOF'
----
-title: Introducción
----
+./scripts/add-client.sh -n acme -f "ACME Corp" -c "#FF5733"
+```
 
+**Opción B: Manualmente**
+
+```bash
+# Crear estructura
+mkdir -p import/clientes/acme/sections/Seccion-1
+mkdir -p import/clientes/acme/public
+
+# Crear config.json
+cat > import/clientes/acme/config.json << 'EOF'
+{
+  "projectName": "ACME Corp",
+  "domain": "acme.helloprisma.com",
+  "secondaryColors": {
+    "highlight": "#FF5733",
+    "accent": "#EFEFEF",
+    "hover": "#CCCCCC"
+  }
+}
+EOF
+
+# Crear contenido
+cat > import/clientes/acme/sections/Seccion-1/index.md << 'EOF'
 # Bienvenida
 
 Este es el contenido de tu sección.
 EOF
 ```
 
-### 3. Generar documentación
+### 3. Agregar logo del cliente
 
 ```bash
-pnpm ingest
+# Copiar tu logo (SVG o PNG)
+cp /ruta/a/tu/logo.svg import/clientes/acme/public/logo.svg
 ```
 
-### 4. Levantar servidor de desarrollo
+### 4. Generar documentación
+
+```bash
+CLIENT_NAME=acme pnpm ingest
+```
+
+### 5. Levantar servidor de desarrollo
 
 ```bash
 pnpm dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+Abre [http://localhost:3000/acme](http://localhost:3000/acme) en tu navegador.
+
+### 6. Deploy con subdominios
+
+Ver [DEPLOYMENT.md](./DEPLOYMENT.md) para configuración completa de subdominios en Vercel + Hostinger.
 
 ## 📁 Estructura de Proyecto
 
 ```
 fumadocs/
 ├── import/
-│   ├── sections/          # Tus secciones de documentación
-│   │   └── introduccion/
-│   │       └── index.md
-│   ├── config.json        # Configuración de marca
-│   └── README.md          # Guía de uso detallada
+│   └── clientes/              # Directorio multi-cliente
+│       ├── partner-gym/       # Cliente actual
+│       │   ├── sections/      # Contenido Markdown del cliente
+│       │   │   ├── Sección 1/
+│       │   │   ├── Sección 2/
+│       │   │   └── Sección 3/
+│       │   ├── public/        # Assets del cliente (logo, imágenes)
+│       │   │   └── logo.svg
+│       │   └── config.json    # Configuración de marca
+│       └── ...                # Más clientes (agregar con add-client.sh)
 ├── src/
-│   ├── app/               # Páginas generadas automáticamente
-│   ├── components/        # Componentes React (búsqueda, etc.)
-│   ├── content/           # Contenido MDX generado
-│   ├── lib/               # Utilidades (nav.ts)
-│   └── styles/            # Estilos CSS modulares
+│   ├── app/                   # Páginas generadas automáticamente
+│   │   ├── partner-gym/       # Rutas generadas de Partner Gym
+│   │   └── layout.tsx
+│   ├── components/            # Componentes React
+│   │   ├── Navigation.tsx     # Navegación sidebar
+│   │   ├── search.tsx         # Búsqueda en tiempo real
+│   │   └── LogoClient.tsx     # Logo dinámico por cliente
+│   ├── content/               # Contenido MDX generado por cliente
+│   │   └── partner-gym/
+│   ├── hooks/
+│   │   └── useClientName.ts   # Hook para detectar cliente actual
+│   ├── lib/
+│   │   └── nav.ts             # Navegación generada
+│   ├── styles/                # Estilos CSS modulares
+│   └── middleware.ts          # Detección de subdominios
 ├── scripts/
-│   └── ingest.ts          # Script de ingesta de contenido
-├── public/                # Archivos estáticos
+│   ├── ingest.ts              # Script de ingesta de contenido
+│   └── add-client.sh          # Script para agregar clientes
+├── public/                    # Assets públicos por cliente
+│   ├── partner-gym/
+│   └── search-index.json      # Índice de búsqueda
+├── DEPLOYMENT.md              # Guía de deploy con subdominios
 ├── package.json
+├── vercel.json                # Configuración Vercel
 ├── next.config.ts
 ├── tailwind.config.ts
 └── tsconfig.json
@@ -84,20 +137,22 @@ fumadocs/
 | Script | Descripción |
 |--------|-------------|
 | `pnpm dev` | Levanta servidor de desarrollo |
-| `pnpm build` | Compila y optimiza para producción |
+| `pnpm build` | Compila y optimiza para producción (ejecuta ingest automáticamente) |
 | `pnpm start` | Inicia servidor de producción |
-| `pnpm ingest` | Genera documentación desde `/import/sections` |
+| `pnpm ingest` | Genera documentación para todos los clientes |
+| `CLIENT_NAME=acme pnpm ingest` | Genera documentación solo para cliente específico |
+| `./scripts/add-client.sh` | Script interactivo para agregar nuevo cliente |
 
-## 🎨 Personalización
+## 🎨 Personalización por Cliente
 
-### Configurar marca
+### Configurar marca del cliente
 
-Edita `import/config.json`:
+Edita `import/clientes/{nombre-cliente}/config.json`:
 
 ```json
 {
-  "projectName": "Mi Proyecto",
-  "domain": "docs.miproyecto.com",
+  "projectName": "Mi Cliente",
+  "domain": "micliente.helloprisma.com",
   "secondaryColors": {
     "highlight": "#3B82F6",
     "accent": "#10B981",
@@ -106,15 +161,63 @@ Edita `import/config.json`:
 }
 ```
 
-Luego ejecuta `pnpm ingest` para aplicar los cambios.
+Luego ejecuta `CLIENT_NAME=micliente pnpm ingest` para aplicar los cambios.
 
-### Agregar secciones
+### Agregar secciones a un cliente
 
-1. Crea una carpeta en `import/sections/`
+1. Crea una carpeta en `import/clientes/{nombre-cliente}/sections/`
 2. Agrega archivos `.md` con contenido
-3. Ejecuta `pnpm ingest`
+3. Ejecuta `CLIENT_NAME={nombre-cliente} pnpm ingest`
 
 Ver [import/README.md](./import/README.md) para más detalles.
+
+## 🌐 Arquitectura Multi-Cliente con Subdominios
+
+### Cómo funciona
+
+```
+Usuario → partnergym.helloprisma.com
+    ↓
+DNS (Hostinger) → CNAME a Vercel
+    ↓
+Vercel → Ejecuta Next.js
+    ↓
+Middleware → Detecta subdominio "partnergym"
+    ↓
+App → Carga contenido de /partner-gym/*
+    ↓
+Renderiza → Con branding de Partner Gym
+```
+
+### Clientes actuales
+
+- **Partner Gym**: `partnergym.helloprisma.com`
+
+### Agregar un nuevo cliente
+
+```bash
+# 1. Crear estructura con script
+./scripts/add-client.sh -n acme -f "ACME Corp" -c "#FF5733"
+
+# 2. Agregar logo
+cp logo.svg import/clientes/acme/public/logo.svg
+
+# 3. Generar sitio
+CLIENT_NAME=acme pnpm ingest
+
+# 4. Configurar DNS en Hostinger
+# Tipo: CNAME
+# Nombre: acme
+# Valor: cname.vercel-dns.com
+
+# 5. Agregar dominio en Vercel
+# acme.helloprisma.com
+
+# 6. Deploy
+git add . && git commit -m "feat: Add ACME client" && git push
+```
+
+Ver [DEPLOYMENT.md](./DEPLOYMENT.md) para guía completa de configuración DNS y Vercel.
 
 ## 📖 Cómo Usar
 
@@ -157,19 +260,51 @@ Automáticamente:
 - ✅ Aplica branding
 - ✅ Crea índice de búsqueda
 
-## 🚀 Deploy
+## 🚀 Deploy con Subdominios
 
-### Vercel (Recomendado)
+### Vercel + Hostinger (Recomendado)
 
-1. Push a GitHub
-2. Conecta repositorio en [Vercel](https://vercel.com)
-3. Vercel automáticamente:
-   - Instala dependencias
-   - Ejecuta `pnpm ingest`
-   - Compila el sitio
-   - Lo despliega
+**Requisitos previos:**
+- Dominio `helloprisma.com` en Hostinger
+- Cuenta de Vercel conectada a GitHub
 
-Ver `.github/workflows/docs.yml` para CI/CD con GitHub Actions.
+**Paso a paso:**
+
+1. **Deploy inicial en Vercel**
+   ```bash
+   # Push a GitHub
+   git push origin main
+
+   # Vercel automáticamente:
+   # - Instala dependencias
+   # - Ejecuta pnpm ingest
+   # - Compila el sitio
+   # - Lo despliega
+   ```
+
+2. **Configurar dominios en Vercel**
+   - Ve a **Settings** → **Domains**
+   - Agrega `*.helloprisma.com` (wildcard)
+   - Agrega subdominios específicos:
+     - `partnergym.helloprisma.com`
+     - `example.helloprisma.com`
+
+3. **Configurar DNS en Hostinger**
+   - Ve a **DNS / Servidores de Nombres**
+   - Agrega registros CNAME:
+     ```
+     CNAME  partnergym  →  cname.vercel-dns.com
+     CNAME  example     →  cname.vercel-dns.com
+     CNAME  *           →  cname.vercel-dns.com (wildcard)
+     ```
+
+4. **Esperar propagación DNS** (5-30 minutos)
+
+5. **Verificar**
+   - `https://partnergym.helloprisma.com`
+   - `https://example.helloprisma.com`
+
+Ver [DEPLOYMENT.md](./DEPLOYMENT.md) para guía detallada con troubleshooting.
 
 ## 📝 Frontmatter Soportado
 

@@ -141,8 +141,10 @@ async function importFromSections() {
 
 async function generatePageFiles() {
   const contentDirs = await fs.readdir(CONTENT)
+  const sortedDirs = contentDirs.sort()
+  let firstSection = ''
 
-  for (const dir of contentDirs) {
+  for (const dir of sortedDirs) {
     const dirPath = path.join(CONTENT, dir)
     const stat = await fs.stat(dirPath)
 
@@ -150,6 +152,11 @@ async function generatePageFiles() {
 
     const sectionName = dir.replace(/^\d+-/, '')
     const appDir = path.join(APP, TARGET_CLIENT, sectionName)
+
+    // Guardar la primera sección para la página raíz
+    if (!firstSection) {
+      firstSection = sectionName
+    }
 
     await fs.ensureDir(appDir)
 
@@ -200,6 +207,19 @@ export default function Page() {
       console.log(`• Subsección generada → src/app/${TARGET_CLIENT}/${sectionName}/${subSlug}/page.tsx`)
     }
   }
+
+  // Generar página raíz del cliente que redirija a la primera sección
+  if (firstSection) {
+    const rootPageFile = path.join(APP, TARGET_CLIENT, 'page.tsx')
+    const rootPageContent = `import { redirect } from 'next/navigation'
+
+export default function ClientRootPage() {
+  redirect('/${TARGET_CLIENT}/${firstSection}')
+}
+`
+    await fs.outputFile(rootPageFile, rootPageContent)
+    console.log(`• Página raíz generada → src/app/${TARGET_CLIENT}/page.tsx (redirige a /${TARGET_CLIENT}/${firstSection})`)
+  }
 }
 
 async function generateNavigation(): Promise<NavItem[]> {
@@ -217,12 +237,19 @@ async function generateNavigation(): Promise<NavItem[]> {
     const indexPath = path.join(dirPath, 'index.mdx')
     if (!fs.existsSync(indexPath)) continue
 
-    // Leer el título del H1 del contenido del index
-    const indexContent = await fs.readFile(indexPath, 'utf8')
-    const indexParsed = matter(indexContent)
-    const h1Title = extractFirstH1(indexParsed.content)
-    const cleanDirName = cleanNotionId(dir.replace(/^\d+-/, ''))
-    const sectionTitle = indexParsed.data.title || h1Title || cleanDirName
+    // Usar el nombre de la carpeta original (sin el prefijo numérico) para el título
+    // Esto se obtiene del nombre original de la carpeta en sections/
+    // Primero, obtener el índice de la sección del prefijo
+    const prefix = dir.match(/^(\d+)-/)?.[1]
+
+    // Buscar la carpeta original en sections
+    const sectionDirs = await fs.readdir(SECTIONS_DIR)
+    const sortedSectionDirs = sectionDirs.sort()
+    const sectionIndex = prefix ? Math.floor((parseInt(prefix) - 10) / 10) : 0
+    const originalSectionName = sortedSectionDirs[sectionIndex] || dir.replace(/^\d+-/, '')
+
+    // Limpiar el nombre de la carpeta de IDs de Notion pero mantener mayúsculas, tildes, etc.
+    const sectionTitle = cleanNotionId(originalSectionName)
 
     const sectionName = dir.replace(/^\d+-/, '') // Remover prefijo numérico (slug)
     const href = '/' + TARGET_CLIENT + '/' + sectionName
@@ -320,18 +347,29 @@ function toPlainText(value: string) {
 
 async function buildRouteMap(): Promise<RouteMap> {
   const routeMap: RouteMap = new Map()
-  const pageFiles = globbySync('**/page.tsx', { cwd: APP })
+  const clientAppDir = path.join(APP, TARGET_CLIENT)
+
+  // Solo buscar páginas del cliente actual
+  const pageFiles = globbySync('**/page.tsx', { cwd: clientAppDir })
 
   for (const rel of pageFiles) {
+    // Construir ruta con prefijo del cliente
     const route =
       rel === 'page.tsx'
-        ? '/'
-        : `/${rel.replace(/\/page\.tsx$/, '').replace(/\/index$/, '')}`
-    const absolute = path.join(APP, rel)
+        ? `/${TARGET_CLIENT}`
+        : `/${TARGET_CLIENT}/${rel.replace(/\/page\.tsx$/, '').replace(/\/index$/, '')}`
+
+    const absolute = path.join(clientAppDir, rel)
     const source = await fs.readFile(absolute, 'utf8')
     const importMatch = source.match(/from\s+["']@\/content\/([^"']+)\/([^"']+)["']/)
     if (!importMatch) continue
-    const contentPath = importMatch[2].replace(/^\.\//, '')
+
+    // El importMatch[1] es "partner-gym/30-seccion-3" y [2] es "Prueba textos.mdx"
+    // Necesitamos construir el path completo relativo al CONTENT dir
+    const sectionDir = importMatch[1].split('/').pop() || '' // "30-seccion-3"
+    const fileName = importMatch[2].replace(/^\.\//, '') // "Prueba textos.mdx"
+    const contentPath = `${sectionDir}/${fileName}` // "30-seccion-3/Prueba textos.mdx"
+
     const normalized = normaliseContentPath(contentPath)
     routeMap.set(normalized, route)
   }
@@ -350,12 +388,20 @@ async function buildSearchIndex(routeMap: RouteMap) {
     const plain = toPlainText(parsed.content)
     if (!plain) continue
 
-    const route =
-      routeMap.get(normaliseContentPath(rel)) ||
-      `/${rel.replace(/\.mdx$/, '').replace(/index$/, '').replace(/\/+/g, '/')}`
+    // Obtener ruta desde routeMap o construir fallback slugificado
+    let route = routeMap.get(normaliseContentPath(rel))
 
-    const cleanRoute = route.replace(/\/\/+/g, '/').replace(/\/$/, '') || '/'
-    const section = cleanRoute === '/' ? 'inicio' : cleanRoute.slice(1).split('/')[0]
+    if (!route) {
+      // Construir ruta con slugs correctos para el fallback
+      const pathParts = rel.replace(/\.mdx$/, '').split('/')
+      const slugifiedParts = pathParts.map(part =>
+        part === 'index' ? '' : slugify(part)
+      ).filter(Boolean)
+      route = `/${TARGET_CLIENT}/${slugifiedParts.join('/')}`
+    }
+
+    const cleanRoute = route.replace(/\/\/+/g, '/').replace(/\/$/, '') || `/${TARGET_CLIENT}`
+    const section = cleanRoute === `/${TARGET_CLIENT}` ? 'inicio' : cleanRoute.slice(1).split('/')[1]
 
     // Extraer título del H1 o usar nombre de archivo limpio
     const h1Title = extractFirstH1(parsed.content)
