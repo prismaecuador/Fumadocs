@@ -14,19 +14,30 @@ export default function LogoClient() {
     const parts = hostname.split('.')
 
     let name = 'default'
+    let internalName = 'default' // Nombre de carpeta interno
 
     // Primero intentar detectar desde el pathname (para localhost)
     const pathMatch = pathname.match(/^\/([^\/]+)/)
     if (pathMatch && pathMatch[1] !== 'default') {
       name = pathMatch[1]
+      internalName = pathMatch[1]
     } else if (parts.length > 2 && hostname !== 'localhost') {
-      // Si es apple.deziklabs.com → apple
-      name = parts[0]
+      // Si es partner.helloprisma.com → partner (subdominio)
+      const subdomain = parts[0]
+      name = subdomain
+
+      // Mapear a nombre interno de carpeta
+      const subdomainToFolder: Record<string, string> = {
+        'partner': 'partner-gym',
+        'aurora': 'aurora',
+        'sushicat': 'sushicat'
+      }
+      internalName = subdomainToFolder[subdomain] || subdomain
     }
 
-    setClientName(name)
-    // Establecer el logo inicial basado en el cliente detectado
-    setCurrentLogo(`/${name}/logo.svg`)
+    setClientName(name) // Guardamos el nombre corto (partner, aurora, etc)
+    // Logo usa el nombre de carpeta interno
+    setCurrentLogo(`/${internalName}/logo.svg`)
   }, []) // Se ejecuta solo una vez al montar
 
   const handleLogoError = (e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -44,7 +55,7 @@ export default function LogoClient() {
   }
 
   return (
-    <Link href={`/${clientName}`} aria-label="Ir al inicio">
+    <Link href="/" aria-label="Ir al inicio">
       <img
         src={currentLogo}
         alt="Logotipo"
