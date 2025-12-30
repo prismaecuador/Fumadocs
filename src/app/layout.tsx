@@ -9,9 +9,8 @@ import MobileNav from "@/components/MobileNav";
 
 async function getClientFromHeaders(): Promise<string> {
   const headersList = await headers();
-  const pathname = headersList.get("x-pathname") || "";
-  const match = pathname.match(/^\/([^\/]+)/);
-  return match ? match[1] : "partner-gym";
+  const clientName = headersList.get("x-client-name") || "partner-gym";
+  return clientName;
 }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {

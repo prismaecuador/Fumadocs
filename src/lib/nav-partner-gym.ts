@@ -1,6 +1,6 @@
 export const nav = [
   {
-    "title": "Sección 1",
+    "title": "Sección 1",
     "href": "/partner-gym/seccion-1",
     "items": [
       {
@@ -10,7 +10,7 @@ export const nav = [
     ]
   },
   {
-    "title": "Sección 2",
+    "title": "Sección 2",
     "href": "/partner-gym/seccion-2",
     "items": [
       {
