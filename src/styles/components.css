@@ -322,3 +322,113 @@ button:focus-visible,
   letter-spacing: 0.07em;
   color: rgba(255, 255, 255, 0.6);
 }
+
+.mobile-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  padding: 8px;
+  transition: color var(--transition-duration) var(--transition-easing);
+}
+
+.mobile-nav-toggle:hover,
+.mobile-nav-toggle:focus-visible {
+  color: rgba(255, 255, 255, 0.8);
+  outline: none;
+}
+
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-nav-menu {
+  width: 80%;
+  max-width: 320px;
+  height: 100%;
+  background: #333;
+  padding: 24px 0;
+  overflow-y: auto;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.mobile-nav-section-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  color: var(--color-white);
+  padding: 12px 24px;
+  text-decoration: none;
+  transition: background var(--transition-duration) var(--transition-easing);
+}
+
+.mobile-nav-section-title:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav-items {
+  display: flex;
+  flex-direction: column;
+  background: #292929;
+}
+
+.mobile-nav-item {
+  font-family: "Manrope", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 12px 24px 12px 40px;
+  text-decoration: none;
+  transition: color var(--transition-duration) var(--transition-easing);
+}
+
+.mobile-nav-item:hover {
+  color: var(--color-white);
+}
+
+@media (max-width: 900px) {
+  .mobile-header .page-search {
+    padding: 0;
+  }
+
+  .mobile-header .search-control {
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-header .search-input {
+    max-width: 200px;
+    font-size: 0.75rem;
+    padding: 10px 12px 10px 6px;
+  }
+
+  .mobile-header .search-control svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mobile-header .search-input {
+    max-width: 140px;
+  }
+}

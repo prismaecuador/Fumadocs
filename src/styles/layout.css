@@ -12,8 +12,13 @@ body {
 .page-shell {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   width: 100%;
   background: var(--color-background-primary);
+}
+
+.mobile-header {
+  display: none;
 }
 
 .page-sidebar {
@@ -74,47 +79,64 @@ body {
 }
 
 @media (max-width: 900px) {
-  .page-sidebar {
-    position: relative;
-    left: 0;
+  .mobile-header {
+    display: flex;
+    position: sticky;
     top: 0;
     width: 100%;
-    height: auto;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 0;
+    background: #333;
+    padding: 16px 24px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .mobile-header .page-logo {
+    max-width: 150px;
+  }
+
+  .page-sidebar {
+    display: none;
   }
 
   .page-grid {
+    width: 100%;
     margin-left: 0;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 24px;
+    padding: 24px;
     flex-direction: column;
   }
 
   .page-content {
-    grid-column: span 12;
+    width: 100%;
   }
 }
 
 @media (max-width: 640px) {
-  .page-sidebar {
-    position: relative;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 24px 20px;
+  .mobile-header {
+    padding: 22px 20px;
+  }
+
+  .mobile-header-right {
+    gap: 12px;
   }
 
   .page-grid {
-    padding: 0 20px;
-    margin-left: 0;
+    padding: 20px;
   }
 
   .page-content {
-    padding: 24px 0;
+    padding: 20px 0;
   }
 }
