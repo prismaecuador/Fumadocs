@@ -16,6 +16,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </div>
             <Search />
             <Navigation items={nav} />
+            <div className="sidebar-footer">
+              Desarrollado por Prisma
+            </div>
           </aside>
           <main className="page-content">
             <article className="content-article">{children}</article>

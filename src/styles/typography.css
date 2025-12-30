@@ -28,26 +28,35 @@ h6 {
 }
 
 h1 {
-  font-size: 2.75rem;
-  line-height: 1.15;
+  font-size: 2.3rem;
+  line-height: 1.30;
   margin-top: 0;
+  font-weight:500;
+  letter-spacing: 0.010em;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 1.2;
   margin-top: 2.5rem;
+  font-weight: 500;
   border-bottom: 2px solid var(--color-border);
   padding-bottom: 0.5rem;
+  letter-spacing: 0.015em;
 }
 
 h3 {
-  font-size: 1.5rem;
-  line-height: 1.25;
+  font-size: 1.4rem;
+  line-height: 1.20;
+  font-weight: 500;
+  letter-spacing: 0.015em;
 }
 
 p {
+  font-size: 1.1rem;
+  letter-spacing: 0.015em;
   margin: 0 0 1.25rem;
+  font-weight: 400;
   color: var(--color-text-muted);
 }
 

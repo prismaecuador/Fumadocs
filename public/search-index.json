@@ -1,12 +1,12 @@
 [
   {
-    "title": "Branding 2d3ac768aa2980918e37c02e89edc8f0",
+    "title": "Branding",
     "href": "/10-seccion-1/Branding 2d3ac768aa2980918e37c02e89edc8f0",
     "content": "Branding",
     "section": "10-seccion-1"
   },
   {
-    "title": "Sección 1",
+    "title": "Branding",
     "href": "/10-seccion-1",
     "content": "Branding",
     "section": "10-seccion-1"
@@ -18,15 +18,27 @@
     "section": "20-seccion-2"
   },
   {
-    "title": "Misión y Visión 2d3ac768aa29805bbb1bf19124e6ba04",
+    "title": "Misión y Visión",
     "href": "/20-seccion-2/Misión y Visión 2d3ac768aa29805bbb1bf19124e6ba04",
     "content": "Misión y Visión Texto sobre misión que bonito",
     "section": "20-seccion-2"
   },
   {
-    "title": "Sección 2",
+    "title": "Hoodies y ropa",
     "href": "/20-seccion-2",
     "content": "Hoodies y ropa Ropa 1 Ropa 2",
     "section": "20-seccion-2"
+  },
+  {
+    "title": "Manual de Marca SushiCat",
+    "href": "/30-seccion-3/Prueba textos",
+    "content": "Manual de Marca SushiCat Tipografia La tipografia es parte esencial de un manual de marca y importante para definir como una letra se utiliza Colores Pantone La tipografia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un m anual de marca y importante para definir como una letra se utiliza",
+    "section": "30-seccion-3"
+  },
+  {
+    "title": "Manual de Marca SushiCat",
+    "href": "/30-seccion-3",
+    "content": "Manual de Marca SushiCat Tipografia La tipografia es parte esencial de un manual de marca y importante para definir como una letra se utiliza Colores Pantone La tipografia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un mrafia es parte esencial de un m anual de marca y importante para definir como una letra se utiliza",
+    "section": "30-seccion-3"
   }
 ]

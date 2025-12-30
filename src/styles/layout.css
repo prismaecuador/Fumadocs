@@ -24,10 +24,10 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 48px;
-  background: var(--color-gray-500);
+  gap: 0px;
+  background: #333;
   color: var(--color-white);
-  padding: 55px 0px;
+  padding: 55px 0px 0px;
   z-index: 2;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
   overflow-y: auto;
@@ -44,7 +44,7 @@ body {
 .page-brand {
   display: flex;
   justify-content:left;
-  padding: 0px 20px;
+  padding: 10px 25px;
   align-items: center;
 }
 

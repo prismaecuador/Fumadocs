@@ -55,6 +55,18 @@ function slugify(text: string): string {
     .replace(/-+/g, '-') // Reemplazar múltiples guiones con uno solo
 }
 
+// Función para limpiar nombres de archivo removiendo IDs tipo Notion
+function cleanNotionId(text: string): string {
+  // Remover IDs tipo: "Nombre 2d3ac768aa29805bbb1bf19124e6ba04"
+  return text.replace(/\s+[0-9a-f]{32}$/i, '').trim()
+}
+
+// Función para extraer el primer H1 del contenido markdown
+function extractFirstH1(content: string): string | null {
+  const h1Match = content.match(/^#\s+(.+)$/m)
+  return h1Match ? h1Match[1].trim() : null
+}
+
 async function readBrandConfig(): Promise<BrandConfig | null> {
   if (!fs.existsSync(CONFIG_FILE)) return null
   const config = await fs.readJson(CONFIG_FILE)
@@ -106,20 +118,8 @@ async function importFromSections() {
       // También maneja rutas sin carpeta padre
       content = content.replace(/!\[([^\]]*)\]\(([^/)]+\.[a-z]+)\)/g, `![$1](/${TARGET_CLIENT}/$2)`)
 
-      // Agregar metadata con nombres originales para mostrar en UI
-      const isIndexFile = mdFile === 'index.md' || mdFile === 'index.mdx'
-      const fileNameWithoutExt = mdFile.replace(/\.(md|mdx)$/, '')
-
-      const metadata = {
-        ...parsed.data,
-        // Solo agregar title si no existe uno
-        title: parsed.data.title || (isIndexFile ? sectionName : fileNameWithoutExt),
-        // Guardar el nombre original de la sección para referencia
-        _sectionOriginalName: sectionName,
-        _fileOriginalName: fileNameWithoutExt
-      }
-
-      const mdxContent = matter.stringify(content, metadata)
+      // No agregar frontmatter - el contenido ya tiene su H1 interno
+      const mdxContent = content
 
       const mdxFileName = mdFile.replace(/\.md$/, '.mdx')
       const mdxPath = path.join(sectionContentDir, mdxFileName)
@@ -129,13 +129,8 @@ async function importFromSections() {
 
       // Si este es el primer archivo y no hay index, crear una copia como index.mdx
       if (!hasIndex && mdFile === firstFile) {
-        const indexMetadata = {
-          ...metadata,
-          title: parsed.data.title || sectionName
-        }
-        const indexContent = matter.stringify(content, indexMetadata)
         const indexPath = path.join(sectionContentDir, 'index.mdx')
-        await fs.outputFile(indexPath, indexContent)
+        await fs.outputFile(indexPath, content)
         console.log(`• ${sectionName}/${mdFile} → src/content/${TARGET_CLIENT}/${path.basename(sectionContentDir)}/index.mdx (auto-generado)`)
       }
     }
@@ -222,10 +217,12 @@ async function generateNavigation(): Promise<NavItem[]> {
     const indexPath = path.join(dirPath, 'index.mdx')
     if (!fs.existsSync(indexPath)) continue
 
-    // Leer el título original del frontmatter del index
+    // Leer el título del H1 del contenido del index
     const indexContent = await fs.readFile(indexPath, 'utf8')
     const indexParsed = matter(indexContent)
-    const sectionTitle = indexParsed.data.title || dir.replace(/^\d+-/, '')
+    const h1Title = extractFirstH1(indexParsed.content)
+    const cleanDirName = cleanNotionId(dir.replace(/^\d+-/, ''))
+    const sectionTitle = indexParsed.data.title || h1Title || cleanDirName
 
     const sectionName = dir.replace(/^\d+-/, '') // Remover prefijo numérico (slug)
     const href = '/' + TARGET_CLIENT + '/' + sectionName
@@ -250,7 +247,9 @@ async function generateNavigation(): Promise<NavItem[]> {
         const subContent = await fs.readFile(subFilePath, 'utf8')
         const subParsed = matter(subContent)
 
-        const subTitle = subParsed.data.title || subFile.replace(/\.mdx$/, '')
+        const subH1Title = extractFirstH1(subParsed.content)
+        const cleanSubFileName = cleanNotionId(subFile.replace(/\.mdx$/, ''))
+        const subTitle = subParsed.data.title || subH1Title || cleanSubFileName
         const subSlug = slugify(subFile.replace(/\.mdx$/, ''))
         const subHref = `${href}/${subSlug}`
 
@@ -358,11 +357,13 @@ async function buildSearchIndex(routeMap: RouteMap) {
     const cleanRoute = route.replace(/\/\/+/g, '/').replace(/\/$/, '') || '/'
     const section = cleanRoute === '/' ? 'inicio' : cleanRoute.slice(1).split('/')[0]
 
+    // Extraer título del H1 o usar nombre de archivo limpio
+    const h1Title = extractFirstH1(parsed.content)
+    const fileName = rel.replace(/\.mdx$/, '').split('/').pop() || 'Documento'
+    const cleanFileName = cleanNotionId(fileName)
+
     entries.push({
-      title:
-        (parsed.data?.title as string | undefined) ||
-        rel.replace(/\.mdx$/, '').split('/').pop() ||
-        'Documento',
+      title: (parsed.data?.title as string | undefined) || h1Title || cleanFileName,
       href: cleanRoute,
       content: plain.slice(0, 1200),
       section,

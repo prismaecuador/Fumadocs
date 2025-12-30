@@ -111,7 +111,7 @@ export default function Search() {
   return (
     <div className="page-search" ref={containerRef}>
       <form className="search-control" role="search" onSubmit={handleSubmit}>
-        <svg width="28" height="28" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"><title>Search in guidelines</title><path d="M42,42 L29,29 L42,42 Z M32.5,20 C32.5,27.6 26.8,32.5 20,32.5 C13.1,32.5 7.5,26.9 7.5,20 C7.5,13.1 13.1,7.5 20,7.5 C26.9,7.5 32.5,13.1 32.5,20 Z" stroke="rgb(184, 184, 185)" stroke-width="1" fill="none" fill-rule="evenodd"></path></svg>
+        <svg width="28" height="28" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"><title>Search in guidelines</title><path d="M42,42 L29,29 L42,42 Z M32.5,20 C32.5,27.6 26.8,32.5 20,32.5 C13.1,32.5 7.5,26.9 7.5,20 C7.5,13.1 13.1,7.5 20,7.5 C26.9,7.5 32.5,13.1 32.5,20 Z" stroke="rgb(184, 184, 185)" strokeWidth="1" fill="none" fillRule="evenodd"></path></svg>
         <input
           id="sidebar-search"
           type="search"
