@@ -44,7 +44,7 @@ export default function LogoClient() {
   }
 
   return (
-    <Link href="/" aria-label="Ir al inicio">
+    <Link href={`/${clientName}`} aria-label="Ir al inicio">
       <img
         src={currentLogo}
         alt="Logotipo"

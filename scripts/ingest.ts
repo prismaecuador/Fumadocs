@@ -294,10 +294,12 @@ async function generateNavigation(): Promise<NavItem[]> {
 }
 
 async function updateNavFile(nav: NavItem[]) {
-  const navContent = `export const nav = ${JSON.stringify(nav, null, 2 )}
+  // Guardar nav específico del cliente
+  const navContent = `export const nav = ${JSON.stringify(nav, null, 2)}
 `
-  await fs.outputFile(path.join(SRC, 'src', 'lib', 'nav.ts'), navContent)
-  console.log('• Navegación actualizada → src/lib/nav.ts')
+  const clientNavPath = path.join(SRC, 'src', 'lib', `nav-${TARGET_CLIENT}.ts`)
+  await fs.outputFile(clientNavPath, navContent)
+  console.log(`• Navegación del cliente generada → src/lib/nav-${TARGET_CLIENT}.ts`)
 }
 
 async function applyBranding(config: BrandConfig) {
@@ -435,6 +437,57 @@ async function copyPublicAssets() {
   console.log(`• ${files.length} archivos copiados → public/${TARGET_CLIENT}/`)
 }
 
+async function generateComingSoonPage(clientName: string) {
+  const appDir = path.join(APP, clientName)
+  const pageFile = path.join(appDir, 'page.tsx')
+
+  const pageContent = `export default function ComingSoonPage() {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      backgroundColor: '#fff',
+      color: '#333',
+      fontFamily: 'Manrope, sans-serif',
+      fontSize: '2rem',
+      textAlign: 'center',
+      padding: '20px'
+    }}>
+      <div>
+        <h1 style={{ fontSize: '3rem', marginBottom: '1rem', fontWeight: 'bold' }}>
+          Próximamente
+        </h1>
+        <p style={{ fontSize: '1.5rem', opacity: 0.7 }}>
+          ${clientName.charAt(0).toUpperCase() + clientName.slice(1)}
+        </p>
+      </div>
+    </div>
+  );
+}
+`
+
+  await fs.ensureDir(appDir)
+  await fs.outputFile(pageFile, pageContent)
+  console.log(`• Página "Próximamente" generada → src/app/${clientName}/page.tsx`)
+}
+
+async function isClientEmpty(): Promise<boolean> {
+  if (!fs.existsSync(SECTIONS_DIR)) {
+    return true
+  }
+
+  const sections = await fs.readdir(SECTIONS_DIR)
+  const validSections = sections.filter(s => {
+    const sectionPath = path.join(SECTIONS_DIR, s)
+    const stat = fs.statSync(sectionPath)
+    return stat.isDirectory()
+  })
+
+  return validSections.length === 0
+}
+
 async function main() {
   await fs.ensureDir(CONTENT)
 
@@ -443,6 +496,34 @@ async function main() {
   // Leer configuración de branding
   const brandConfig = await readBrandConfig()
 
+  // Verificar si el cliente está vacío (sin secciones)
+  const isEmpty = await isClientEmpty()
+
+  if (isEmpty) {
+    console.log('⚠️  Cliente sin contenido detectado. Generando página "Próximamente"...\n')
+
+    // Copiar assets públicos del cliente (logo)
+    console.log('🖼️  Copiando assets públicos...')
+    await copyPublicAssets()
+
+    // Generar página de "Próximamente"
+    await generateComingSoonPage(TARGET_CLIENT)
+
+    // Crear navegación vacía
+    const emptyNav: NavItem[] = []
+    await updateNavFile(emptyNav)
+
+    // Aplicar branding si existe config
+    if (brandConfig) {
+      console.log('\n🎨 Aplicando branding...')
+      await applyBranding(brandConfig)
+    }
+
+    console.log('\n✅ ¡Página "Próximamente" generada para cliente: ' + TARGET_CLIENT + '!\n')
+    return
+  }
+
+  // Cliente con contenido - flujo normal
   // Copiar assets públicos del cliente
   console.log('🖼️  Copiando assets públicos...')
   await copyPublicAssets()

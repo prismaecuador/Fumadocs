@@ -1,0 +1,9 @@
+{
+  "projectName": "Aurora",
+  "domain": "aurora.helloprisma.com",
+  "secondaryColors": {
+    "highlight": "#FF6B9D",
+    "accent": "#C44569",
+    "hover": "#8E3A59"
+  }
+}

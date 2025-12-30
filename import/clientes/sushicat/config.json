@@ -1,0 +1,9 @@
+{
+  "projectName": "SushiCat",
+  "domain": "sushicat.helloprisma.com",
+  "secondaryColors": {
+    "highlight": "#FF6347",
+    "accent": "#FF4500",
+    "hover": "#DC143C"
+  }
+}

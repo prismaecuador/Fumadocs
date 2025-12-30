@@ -1,59 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readdirSync } from 'fs'
-import { join } from 'path'
-
-// Función para obtener lista de clientes disponibles
-function getAvailableClients(): string[] {
-  try {
-    const clientsPath = join(process.cwd(), 'import', 'clientes')
-    return readdirSync(clientsPath, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name)
-  } catch {
-    return []
-  }
-}
 
 export function middleware(request: NextRequest) {
-  const { hostname } = request.nextUrl
+  const { hostname, pathname } = request.nextUrl
 
-  let clientName = 'default'
+  let clientName = 'partner-gym' // Default client
 
   // Detectar subdominio de forma robusta
-  // Ejemplos:
-  // - partnergym.helloprisma.com → partner-gym
-  // - example.helloprisma.com → example
-  // - partnergym.helloprisma.com.mx → partner-gym
-  // - localhost:3000 → default (usar primer cliente disponible)
-  // - helloprisma.com → default
-
   const parts = hostname.split('.')
 
-  // Ignorar localhost o IPs
+  // Ignorar localhost o IPs - extraer del pathname
   if (hostname === 'localhost' || hostname.startsWith('127.0.0.1') || hostname.startsWith('192.168')) {
-    // En desarrollo, usar el primer cliente disponible
-    const clients = getAvailableClients()
-    if (clients.length > 0) {
-      clientName = clients[0]
+    // En desarrollo, extraer cliente del pathname: /partner-gym/... → partner-gym
+    const pathMatch = pathname.match(/^\/([^\/]+)/)
+    if (pathMatch && pathMatch[1]) {
+      clientName = pathMatch[1]
     }
   } else if (parts.length >= 3) {
     // Producción: extraer subdominio (primera parte)
     // partnergym.helloprisma.com → partnergym
-    const subdomain = parts[0]
-
-    // Normalizar nombre (algunos subdominios podrían ser 'partnergym' y el folder 'partner-gym')
-    clientName = subdomain
+    // aurora.helloprisma.com → aurora
+    clientName = parts[0]
   } else if (parts.length === 2) {
-    // Si es solo helloprisma.com (sin subdominio), usar default o primer cliente
-    const clients = getAvailableClients()
-    if (clients.length > 0) {
-      clientName = clients[0]
-    }
+    // Si es solo helloprisma.com (sin subdominio), usar partner-gym
+    clientName = 'partner-gym'
   }
 
-  // Pasar el cliente como header para acceso en la aplicación
+  // Pasar el cliente y pathname como headers para acceso en la aplicación
   const response = NextResponse.next()
   response.headers.set('x-client-name', clientName)
+  response.headers.set('x-pathname', request.nextUrl.pathname)
 
   return response
 }

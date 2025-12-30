@@ -1,36 +1,31 @@
-export const nav = [
-  {
-    "title": "Sección 1",
-    "href": "/partner-gym/seccion-1",
-    "items": [
-      {
-        "title": "Branding",
-        "href": "/partner-gym/seccion-1/branding-2d3ac768aa2980918e37c02e89edc8f0"
-      }
-    ]
-  },
-  {
-    "title": "Sección 2",
-    "href": "/partner-gym/seccion-2",
-    "items": [
-      {
-        "title": "Hoodies y ropa",
-        "href": "/partner-gym/seccion-2/hoodies-y-ropa"
-      },
-      {
-        "title": "Misión y Visión",
-        "href": "/partner-gym/seccion-2/mision-y-vision-2d3ac768aa29805bbb1bf19124e6ba04"
-      }
-    ]
-  },
-  {
-    "title": "Sección 3",
-    "href": "/partner-gym/seccion-3",
-    "items": [
-      {
-        "title": "Manual de Marca SushiCat",
-        "href": "/partner-gym/seccion-3/prueba-textos"
-      }
-    ]
+// Este archivo exporta la navegación dinámica basada en el cliente actual
+// La navegación específica de cada cliente se genera en nav-{cliente}.ts durante el ingest
+
+type NavItem = {
+  title: string;
+  href: string;
+  items?: NavItem[];
+};
+
+// Función para cargar navegación de un cliente específico
+export function getNavForClient(clientName: string): NavItem[] {
+  try {
+    const navModule = require(`./nav-${clientName}`);
+    return navModule.nav || [];
+  } catch (error) {
+    console.warn(`No navigation found for client: ${clientName}, using empty nav`);
+    return [];
   }
-]
+}
+
+// Export por defecto - carga partner-gym como fallback
+// En producción, el layout debe usar getNavForClient() con el cliente detectado
+let nav: NavItem[] = [];
+try {
+  const partnerGymNav = require('./nav-partner-gym');
+  nav = partnerGymNav.nav || [];
+} catch (e) {
+  nav = [];
+}
+
+export { nav };
