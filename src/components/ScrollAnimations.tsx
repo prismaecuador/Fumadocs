@@ -48,24 +48,32 @@ export default function ScrollAnimations() {
         const rect = element.getBoundingClientRect()
 
         // Imagen está en viewport
-        const isInViewport = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2
+        const isInViewport = rect.top < windowHeight * 0.75 && rect.bottom > windowHeight * 0.25
 
         if (isInViewport) {
-          // Remover clases anteriores
-          element.classList.remove('from-top', 'from-bottom')
+          // Solo actualizar dirección si no está visible o si cambió de dirección
+          const currentDirection = element.classList.contains('from-bottom') ? 'down' :
+                                  element.classList.contains('from-top') ? 'up' : null
 
-          // Agregar clase según dirección
-          if (scrollDirection === 'down') {
-            element.classList.add('from-bottom')
-          } else {
-            element.classList.add('from-top')
+          if (!element.classList.contains('visible') || currentDirection !== scrollDirection) {
+            // Remover clase de dirección anterior
+            element.classList.remove('from-top', 'from-bottom')
+
+            // Agregar clase según dirección actual
+            if (scrollDirection === 'down') {
+              element.classList.add('from-bottom')
+            } else {
+              element.classList.add('from-top')
+            }
           }
 
           // Hacer visible
           element.classList.add('visible')
         } else {
-          // Cuando sale del viewport, resetear para próxima entrada
-          element.classList.remove('visible')
+          // Cuando sale del viewport, resetear suavemente
+          if (element.classList.contains('visible')) {
+            element.classList.remove('visible')
+          }
         }
       })
 
@@ -74,7 +82,7 @@ export default function ScrollAnimations() {
         const rect = element.getBoundingClientRect()
 
         // Texto está en viewport
-        const isInViewport = rect.top < windowHeight * 0.85
+        const isInViewport = rect.top < windowHeight * 0.8
 
         if (isInViewport && !element.classList.contains('visible')) {
           element.classList.add('visible')

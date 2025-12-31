@@ -438,12 +438,16 @@ button:focus-visible,
 /* IMÁGENES - Siempre animadas (ida y vuelta) */
 .scroll-animated-image {
   opacity: 0;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+  transition:
+    opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: opacity, transform;
 }
 
 /* Animación desde abajo (scroll hacia abajo) */
 .scroll-animated-image.from-bottom {
-  transform: translateY(100px);
+  transform: translateY(80px);
 }
 
 .scroll-animated-image.from-bottom.visible {
@@ -453,7 +457,7 @@ button:focus-visible,
 
 /* Animación desde arriba (scroll hacia arriba) */
 .scroll-animated-image.from-top {
-  transform: translateY(-100px);
+  transform: translateY(-80px);
 }
 
 .scroll-animated-image.from-top.visible {
@@ -464,9 +468,14 @@ button:focus-visible,
 /* TEXTOS - Solo fade in suave una vez */
 .scroll-animated-text {
   opacity: 0;
-  transition: opacity 0.8s ease-out;
+  transform: translateY(0);
+  transition:
+    opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: opacity, transform;
 }
 
 .scroll-animated-text.visible {
   opacity: 1;
+  transform: translateY(0);
 }
