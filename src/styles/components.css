@@ -438,12 +438,14 @@ button:focus-visible,
 /* Estado inicial - elementos ocultos */
 .scroll-animated {
   opacity: 0;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
 /* Animación desde abajo (scroll hacia abajo) */
 .scroll-animated.from-bottom {
-  transform: translateY(100px);
+  transform: translateY(60px);
 }
 
 .scroll-animated.from-bottom.visible {
@@ -453,10 +455,15 @@ button:focus-visible,
 
 /* Animación desde arriba (scroll hacia arriba) */
 .scroll-animated.from-top {
-  transform: translateY(-100px);
+  transform: translateY(-60px);
 }
 
 .scroll-animated.from-top.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Cuando el elemento ya está visible, mantener estado sin transición brusca */
+.scroll-animated.visible {
+  will-change: auto;
 }
