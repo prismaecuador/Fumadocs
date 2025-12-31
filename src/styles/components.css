@@ -435,35 +435,38 @@ button:focus-visible,
 
 /* ========== ANIMACIONES DE SCROLL ========== */
 
-/* Estado inicial - elementos ocultos */
-.scroll-animated {
+/* IMÁGENES - Siempre animadas (ida y vuelta) */
+.scroll-animated-image {
   opacity: 0;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: opacity, transform;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Animación desde abajo (scroll hacia abajo) */
-.scroll-animated.from-bottom {
-  transform: translateY(60px);
+.scroll-animated-image.from-bottom {
+  transform: translateY(100px);
 }
 
-.scroll-animated.from-bottom.visible {
+.scroll-animated-image.from-bottom.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Animación desde arriba (scroll hacia arriba) */
-.scroll-animated.from-top {
-  transform: translateY(-60px);
+.scroll-animated-image.from-top {
+  transform: translateY(-100px);
 }
 
-.scroll-animated.from-top.visible {
+.scroll-animated-image.from-top.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Cuando el elemento ya está visible, mantener estado sin transición brusca */
-.scroll-animated.visible {
-  will-change: auto;
+/* TEXTOS - Solo fade in suave una vez */
+.scroll-animated-text {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+.scroll-animated-text.visible {
+  opacity: 1;
 }

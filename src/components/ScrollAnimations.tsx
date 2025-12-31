@@ -9,22 +9,29 @@ export default function ScrollAnimations() {
   useEffect(() => {
     let lastScrollY = window.scrollY
     let scrollDirection: 'down' | 'up' = 'down'
-    let animatedElements = new Set<Element>()
+    let images = new Set<Element>()
+    let texts = new Set<Element>()
 
     // Función para inicializar elementos
     const initElements = () => {
       // Limpiar elementos anteriores
-      animatedElements.clear()
+      images.clear()
+      texts.clear()
 
       // Pequeño delay para asegurar que el DOM esté listo
       setTimeout(() => {
-        // SOLO IMÁGENES - sin textos ni títulos
-        const elements = document.querySelectorAll('.content-article img')
+        // IMÁGENES - siempre se animan
+        const imageElements = document.querySelectorAll('.content-article img')
+        imageElements.forEach(element => {
+          element.classList.add('scroll-animated-image')
+          images.add(element)
+        })
 
-        // Agregar clases iniciales a todos los elementos
-        elements.forEach(element => {
-          element.classList.add('scroll-animated')
-          animatedElements.add(element)
+        // TEXTOS - solo fade in una vez
+        const textElements = document.querySelectorAll('.content-article h1, .content-article h2, .content-article h3, .content-article h4, .content-article h5, .content-article h6, .content-article p, .content-article ul, .content-article ol, .content-article blockquote, .content-article pre')
+        textElements.forEach(element => {
+          element.classList.add('scroll-animated-text')
+          texts.add(element)
         })
 
         // Check inicial para elementos ya visibles
@@ -36,41 +43,41 @@ export default function ScrollAnimations() {
     const checkElements = () => {
       const windowHeight = window.innerHeight
 
-      animatedElements.forEach(element => {
+      // IMÁGENES - Se animan siempre (ida y vuelta)
+      images.forEach(element => {
         const rect = element.getBoundingClientRect()
 
-        // Elemento está en viewport - con margen ajustado para evitar parpadeos
-        // Si está en la parte superior (ya scrolleado), siempre visible
-        const isAboveViewport = rect.bottom < 0
-        const isInTopPortion = rect.top < windowHeight * 0.2 && rect.bottom > 0
-        const isInViewport = rect.top < windowHeight * 0.85 && rect.bottom > windowHeight * 0.1
-
-        // Si el elemento ya fue animado y está arriba, mantenerlo visible
-        if (isAboveViewport || isInTopPortion) {
-          element.classList.add('visible')
-          element.classList.add('from-bottom')
-          return
-        }
+        // Imagen está en viewport
+        const isInViewport = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2
 
         if (isInViewport) {
-          // Solo aplicar animación si no estaba visible antes
-          if (!element.classList.contains('visible')) {
-            // Remover clases anteriores
-            element.classList.remove('from-top', 'from-bottom')
+          // Remover clases anteriores
+          element.classList.remove('from-top', 'from-bottom')
 
-            // Agregar clase según dirección
-            if (scrollDirection === 'down') {
-              element.classList.add('from-bottom')
-            } else {
-              element.classList.add('from-top')
-            }
+          // Agregar clase según dirección
+          if (scrollDirection === 'down') {
+            element.classList.add('from-bottom')
+          } else {
+            element.classList.add('from-top')
           }
 
           // Hacer visible
           element.classList.add('visible')
-        } else if (rect.top > windowHeight) {
-          // Solo ocultar si está completamente debajo del viewport
+        } else {
+          // Cuando sale del viewport, resetear para próxima entrada
           element.classList.remove('visible')
+        }
+      })
+
+      // TEXTOS - Solo fade in una vez (no desaparecen)
+      texts.forEach(element => {
+        const rect = element.getBoundingClientRect()
+
+        // Texto está en viewport
+        const isInViewport = rect.top < windowHeight * 0.85
+
+        if (isInViewport && !element.classList.contains('visible')) {
+          element.classList.add('visible')
         }
       })
     }
@@ -92,7 +99,8 @@ export default function ScrollAnimations() {
     // Cleanup
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      animatedElements.clear()
+      images.clear()
+      texts.clear()
     }
   }, [pathname]) // Re-ejecutar cuando cambie la ruta
 
