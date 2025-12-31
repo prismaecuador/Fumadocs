@@ -18,7 +18,8 @@ export default function ScrollAnimations() {
 
       // Pequeño delay para asegurar que el DOM esté listo
       setTimeout(() => {
-        const elements = document.querySelectorAll('.content-article img, .content-article h1, .content-article h2, .content-article h3, .content-article h4, .content-article h5, .content-article h6, .content-article p, .content-article ul, .content-article ol, .content-article blockquote, .content-article pre')
+        // SOLO IMÁGENES - sin textos ni títulos
+        const elements = document.querySelectorAll('.content-article img')
 
         // Agregar clases iniciales a todos los elementos
         elements.forEach(element => {

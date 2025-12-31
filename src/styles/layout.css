@@ -36,6 +36,74 @@ body {
   z-index: 2;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
   overflow-y: auto;
+  animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animación escalonada para elementos del sidebar */
+.page-brand,
+.page-search,
+.nav-section,
+.sidebar-footer {
+  opacity: 0;
+  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.page-brand {
+  animation-delay: 0.2s;
+}
+
+.page-search {
+  animation-delay: 0.3s;
+}
+
+.nav-section:nth-child(1) {
+  animation-delay: 0.4s;
+}
+
+.nav-section:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.nav-section:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.nav-section:nth-child(4) {
+  animation-delay: 0.7s;
+}
+
+.nav-section:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+.nav-section:nth-child(6) {
+  animation-delay: 0.9s;
+}
+
+.sidebar-footer {
+  animation-delay: 1s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .page-grid {
