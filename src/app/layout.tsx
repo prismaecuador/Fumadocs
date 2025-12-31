@@ -1,4 +1,5 @@
 import "@/styles/global.css";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { headers } from "next/headers";
 import { getNavForClient } from "@/lib/nav";
@@ -13,6 +14,28 @@ async function getClientFromHeaders(): Promise<string> {
   return clientName;
 }
 
+function getClientDisplayName(clientName: string): string {
+  const clientNames: Record<string, string> = {
+    'partner-gym': 'Partner',
+    'aurora': 'Aurora',
+    'sushicat': 'SushiCat'
+  };
+  return clientNames[clientName] || clientName;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const clientName = await getClientFromHeaders();
+  const displayName = getClientDisplayName(clientName);
+
+  return {
+    title: `${displayName} - Prisma`,
+    description: `Documentación de ${displayName}`,
+    icons: {
+      icon: '/favicon.svg',
+    },
+  };
+}
+
 export default async function RootLayout({ children }: { children: ReactNode }) {
   // Detectar cliente desde la URL
   const clientName = await getClientFromHeaders();
@@ -21,6 +44,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+      </head>
       <body suppressHydrationWarning className="page-shell">
         {/* Header móvil - solo mostrar si hay navegación */}
         {hasNav && (

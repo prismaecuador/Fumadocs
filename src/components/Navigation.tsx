@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type NavItem = {
   title: string
@@ -13,6 +13,25 @@ type NavItem = {
 export default function Navigation({ items }: { items: NavItem[] }) {
   const pathname = usePathname()
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set())
+
+  // Auto-expandir la sección activa al montar o cuando cambia el pathname
+  useEffect(() => {
+    const activeSection = items.find((item) => {
+      if (pathname === item.href) return true
+      if (item.items) {
+        return item.items.some((subItem) => pathname === subItem.href)
+      }
+      return false
+    })
+
+    if (activeSection) {
+      setExpandedSections((prev) => {
+        const newSet = new Set(prev)
+        newSet.add(activeSection.href)
+        return newSet
+      })
+    }
+  }, [pathname, items])
 
   const toggleSection = (href: string) => {
     setExpandedSections((prev) => {

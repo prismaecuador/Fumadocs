@@ -403,8 +403,9 @@ async function buildSearchIndex(routeMap: RouteMap) {
       route = `/${TARGET_CLIENT}/${slugifiedParts.join('/')}`
     }
 
-    const cleanRoute = route.replace(/\/\/+/g, '/').replace(/\/$/, '') || `/${TARGET_CLIENT}`
-    const section = cleanRoute === `/${TARGET_CLIENT}` ? 'inicio' : cleanRoute.slice(1).split('/')[1]
+    // Remover el prefijo del cliente de la ruta para que sea limpia
+    const cleanRoute = route.replace(`/${TARGET_CLIENT}`, '').replace(/\/\/+/g, '/').replace(/\/$/, '') || '/'
+    const section = cleanRoute === '/' ? 'inicio' : cleanRoute.slice(1).split('/')[0]
 
     // Extraer título del H1 o usar nombre de archivo limpio
     const h1Title = extractFirstH1(parsed.content)
