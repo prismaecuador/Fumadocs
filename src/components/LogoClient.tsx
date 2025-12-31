@@ -14,11 +14,8 @@ export default function LogoClient() {
 
     let internalName = 'default' // Nombre de carpeta interno
 
-    // Primero intentar detectar desde el pathname (para localhost)
-    const pathMatch = pathname.match(/^\/([^\/]+)/)
-    if (pathMatch && pathMatch[1] !== 'default') {
-      internalName = pathMatch[1]
-    } else if (parts.length > 2 && hostname !== 'localhost') {
+    // Primero detectar desde el subdominio en producción
+    if (parts.length > 2 && hostname !== 'localhost') {
       // Si es partner.helloprisma.com → partner (subdominio)
       const subdomain = parts[0]
 
@@ -29,6 +26,12 @@ export default function LogoClient() {
         'sushicat': 'sushicat'
       }
       internalName = subdomainToFolder[subdomain] || subdomain
+    } else if (hostname === 'localhost' || hostname.startsWith('127.0.0.1') || hostname.startsWith('192.168')) {
+      // En localhost, detectar desde el pathname: /partner-gym/... → partner-gym
+      const pathMatch = pathname.match(/^\/([^\/]+)/)
+      if (pathMatch && pathMatch[1] !== 'default') {
+        internalName = pathMatch[1]
+      }
     }
 
     // Logo usa el nombre de carpeta interno
@@ -46,11 +49,8 @@ export default function LogoClient() {
 
     let internalName = 'default'
 
-    // Detectar nombre interno de carpeta
-    const pathMatch = pathname.match(/^\/([^\/]+)/)
-    if (pathMatch && pathMatch[1] !== 'default') {
-      internalName = pathMatch[1]
-    } else if (parts.length > 2 && hostname !== 'localhost') {
+    // Primero detectar desde el subdominio en producción
+    if (parts.length > 2 && hostname !== 'localhost') {
       const subdomain = parts[0]
       const subdomainToFolder: Record<string, string> = {
         'partner': 'partner-gym',
@@ -58,6 +58,12 @@ export default function LogoClient() {
         'sushicat': 'sushicat'
       }
       internalName = subdomainToFolder[subdomain] || subdomain
+    } else if (hostname === 'localhost' || hostname.startsWith('127.0.0.1') || hostname.startsWith('192.168')) {
+      // En localhost, detectar desde el pathname
+      const pathMatch = pathname.match(/^\/([^\/]+)/)
+      if (pathMatch && pathMatch[1] !== 'default') {
+        internalName = pathMatch[1]
+      }
     }
 
     // Intentar diferentes variantes del logo usando el nombre interno

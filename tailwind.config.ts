@@ -8,7 +8,7 @@ export default {
   ],
   theme: {
     extend: {
-      colors: { brand: { DEFAULT: '#FF6347', accent: '#FF4500', hover: '#DC143C' } },
+      colors: { brand: { DEFAULT: '#D6F800', accent: '#EFEFEF', hover: '#EFEFEF' } },
       typography: ({ theme }: any) => ({
         DEFAULT: {
           css: {

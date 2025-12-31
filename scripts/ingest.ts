@@ -214,11 +214,11 @@ export default function Page() {
     const rootPageContent = `import { redirect } from 'next/navigation'
 
 export default function ClientRootPage() {
-  redirect('/${TARGET_CLIENT}/${firstSection}')
+  redirect('/${firstSection}')
 }
 `
     await fs.outputFile(rootPageFile, rootPageContent)
-    console.log(`• Página raíz generada → src/app/${TARGET_CLIENT}/page.tsx (redirige a /${TARGET_CLIENT}/${firstSection})`)
+    console.log(`• Página raíz generada → src/app/${TARGET_CLIENT}/page.tsx (redirige a /${firstSection})`)
   }
 }
 
