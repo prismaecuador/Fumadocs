@@ -7,6 +7,7 @@ import Search from "@/components/search";
 import LogoClient from "@/components/LogoClient";
 import Navigation from "@/components/Navigation";
 import MobileNav from "@/components/MobileNav";
+import ScrollAnimations from "@/components/ScrollAnimations";
 
 async function getClientFromHeaders(): Promise<string> {
   const headersList = await headers();
@@ -80,6 +81,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             <article className="content-article">{children}</article>
           </main>
         </div>
+        <ScrollAnimations />
       </body>
     </html>
   );

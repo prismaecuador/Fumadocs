@@ -432,3 +432,31 @@ button:focus-visible,
     max-width: 140px;
   }
 }
+
+/* ========== ANIMACIONES DE SCROLL ========== */
+
+/* Estado inicial - elementos ocultos */
+.scroll-animated {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animación desde abajo (scroll hacia abajo) */
+.scroll-animated.from-bottom {
+  transform: translateY(100px);
+}
+
+.scroll-animated.from-bottom.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animación desde arriba (scroll hacia arriba) */
+.scroll-animated.from-top {
+  transform: translateY(-100px);
+}
+
+.scroll-animated.from-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
