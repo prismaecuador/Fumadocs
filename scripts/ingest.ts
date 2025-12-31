@@ -252,7 +252,8 @@ async function generateNavigation(): Promise<NavItem[]> {
     const sectionTitle = cleanNotionId(originalSectionName)
 
     const sectionName = dir.replace(/^\d+-/, '') // Remover prefijo numérico (slug)
-    const href = '/' + TARGET_CLIENT + '/' + sectionName
+    // No incluir el prefijo del cliente en las rutas, solo el path
+    const href = '/' + sectionName
 
     // Buscar subsecciones (archivos .mdx que NO sean index.mdx)
     const mdxFiles = await fs.readdir(dirPath)

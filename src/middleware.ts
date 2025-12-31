@@ -38,7 +38,11 @@ export function middleware(request: NextRequest) {
     // partner.helloprisma.com/ → /partner-gym (interno)
     const url = request.nextUrl.clone()
     url.pathname = `/${clientName}${pathname}`
-    return NextResponse.rewrite(url)
+
+    const response = NextResponse.rewrite(url)
+    response.headers.set('x-client-name', clientName)
+    response.headers.set('x-pathname', pathname)
+    return response
   } else if (parts.length === 2) {
     // Si es solo helloprisma.com (sin subdominio), usar partner-gym
     clientName = 'partner-gym'
