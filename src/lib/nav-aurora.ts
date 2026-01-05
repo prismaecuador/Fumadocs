@@ -10,14 +10,6 @@ export const nav = [
       {
         "title": "Manifiesto",
         "href": "/01-manifiesto/02-manifiesto"
-      },
-      {
-        "title": "Manifiesto",
-        "href": "/01-manifiesto/manifiesto"
-      },
-      {
-        "title": "Slogan",
-        "href": "/01-manifiesto/slogan"
       }
     ]
   },
@@ -44,26 +36,6 @@ export const nav = [
       {
         "title": "Aplicaciones",
         "href": "/02-linea-grafica/05-aplicaciones"
-      },
-      {
-        "title": "Aplicaciones",
-        "href": "/02-linea-grafica/aplicaciones"
-      },
-      {
-        "title": "Cromática",
-        "href": "/02-linea-grafica/cromatica"
-      },
-      {
-        "title": "Elementos Gráficos",
-        "href": "/02-linea-grafica/elementos-graficos"
-      },
-      {
-        "title": "Logo",
-        "href": "/02-linea-grafica/logo"
-      },
-      {
-        "title": "Tipografía",
-        "href": "/02-linea-grafica/tipografia"
       }
     ]
   },
@@ -86,22 +58,6 @@ export const nav = [
       {
         "title": "Customer Journey Map",
         "href": "/03-exploracion-de-marca/04-customer-journey-map"
-      },
-      {
-        "title": "Análisis de Competencia",
-        "href": "/03-exploracion-de-marca/analisis-de-competencia"
-      },
-      {
-        "title": "Customer Journey Map",
-        "href": "/03-exploracion-de-marca/customer-journey-map"
-      },
-      {
-        "title": "Espacio en el mercado",
-        "href": "/03-exploracion-de-marca/espacio-en-el-mercado"
-      },
-      {
-        "title": "Público Objetivo",
-        "href": "/03-exploracion-de-marca/publico-objetivo"
       }
     ]
   },
@@ -124,22 +80,6 @@ export const nav = [
       {
         "title": "Valores",
         "href": "/04-proposito-de-marca/04-valores"
-      },
-      {
-        "title": "Misión",
-        "href": "/04-proposito-de-marca/mision"
-      },
-      {
-        "title": "Propósito",
-        "href": "/04-proposito-de-marca/proposito"
-      },
-      {
-        "title": "Valores",
-        "href": "/04-proposito-de-marca/valores"
-      },
-      {
-        "title": "Visión",
-        "href": "/04-proposito-de-marca/vision"
       }
     ]
   },
@@ -158,18 +98,6 @@ export const nav = [
       {
         "title": "Diferenciadores",
         "href": "/05-posicionamiento-de-marca/03-diferenciadores"
-      },
-      {
-        "title": "Diferenciadores",
-        "href": "/05-posicionamiento-de-marca/diferenciadores"
-      },
-      {
-        "title": "Posicionamiento de Marca",
-        "href": "/05-posicionamiento-de-marca/posicionamiento-de-marca"
-      },
-      {
-        "title": "Propuesta de Valor",
-        "href": "/05-posicionamiento-de-marca/propuesta-de-valor"
       }
     ]
   },
@@ -188,18 +116,6 @@ export const nav = [
       {
         "title": "Estilo de Redacción",
         "href": "/06-identidad-de-marca/03-estilo-de-redaccion"
-      },
-      {
-        "title": "Estilo de Redacción",
-        "href": "/06-identidad-de-marca/estilo-de-redaccion"
-      },
-      {
-        "title": "Personalidad de Marca",
-        "href": "/06-identidad-de-marca/personalidad-de-marca"
-      },
-      {
-        "title": "Tono de Voz",
-        "href": "/06-identidad-de-marca/tono-de-voz"
       }
     ]
   }
