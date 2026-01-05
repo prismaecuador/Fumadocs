@@ -55,10 +55,13 @@ function slugify(text: string): string {
     .replace(/-+/g, '-') // Reemplazar múltiples guiones con uno solo
 }
 
-// Función para limpiar nombres de archivo removiendo IDs tipo Notion
+// Función para limpiar nombres de archivo removiendo IDs tipo Notion y prefijos numéricos
 function cleanNotionId(text: string): string {
   // Remover IDs tipo: "Nombre 2d3ac768aa29805bbb1bf19124e6ba04"
-  return text.replace(/\s+[0-9a-f]{32}$/i, '').trim()
+  let cleaned = text.replace(/\s+[0-9a-f]{32}$/i, '').trim()
+  // Remover prefijos numéricos como "01-", "02-", "1-", "2-", etc.
+  cleaned = cleaned.replace(/^\d+-/, '').trim()
+  return cleaned
 }
 
 // Función para extraer el primer H1 del contenido markdown

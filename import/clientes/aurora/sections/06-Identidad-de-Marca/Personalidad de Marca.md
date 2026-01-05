@@ -1,0 +1,5 @@
+# Personalidad de Marca
+
+La personalidad de marca es cómo se siente una marca: los rasgos y características que la hacen destacar y conectar con las personas. Es cómo se presenta una marca, ya sea audaz, estratégica, accesible o innovadora.
+
+![Slide 18.jpg](Personalidad%20de%20Marca/Slide_18.jpg)
