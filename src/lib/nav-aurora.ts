@@ -14,7 +14,7 @@ export const nav = [
     ]
   },
   {
-    "title": "Linea-Grafica",
+    "title": "Línea Gráfica",
     "href": "/02-linea-grafica",
     "items": [
       {
@@ -40,7 +40,7 @@ export const nav = [
     ]
   },
   {
-    "title": "Exploracion-de-Marca",
+    "title": "Exploración de Marca",
     "href": "/03-exploracion-de-marca",
     "items": [
       {
@@ -62,7 +62,7 @@ export const nav = [
     ]
   },
   {
-    "title": "Proposito-de-Marca",
+    "title": "Propósito de Marca",
     "href": "/04-proposito-de-marca",
     "items": [
       {
@@ -84,7 +84,7 @@ export const nav = [
     ]
   },
   {
-    "title": "Posicionamiento-de-Marca",
+    "title": "Posicionamiento de Marca",
     "href": "/05-posicionamiento-de-marca",
     "items": [
       {
@@ -102,7 +102,7 @@ export const nav = [
     ]
   },
   {
-    "title": "Identidad-de-Marca",
+    "title": "Identidad de Marca",
     "href": "/06-identidad-de-marca",
     "items": [
       {
