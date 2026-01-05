@@ -185,7 +185,7 @@
   padding: 12px;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.36);
   backdrop-filter: blur(18px);
-  z-index: 4;
+  z-index: 9999;
 }
 
 .search-result {
