@@ -1,0 +1,9 @@
+{
+  "projectName": "Brickell",
+  "domain": "brickell.helloprisma.com",
+  "secondaryColors": {
+    "highlight": "#a1674a",
+    "accent": "#d9b39a",
+    "hover": "#33251c"
+  }
+}
