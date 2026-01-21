@@ -23,7 +23,8 @@ export default function LogoClient() {
       const subdomainToFolder: Record<string, string> = {
         'partner': 'partner-gym',
         'aurora': 'aurora',
-        'sushicat': 'sushicat'
+        'sushicat': 'sushicat',
+        'brickell': 'brickell'
       }
       internalName = subdomainToFolder[subdomain] || subdomain
     } else if (hostname === 'localhost' || hostname.startsWith('127.0.0.1') || hostname.startsWith('192.168')) {
@@ -55,7 +56,8 @@ export default function LogoClient() {
       const subdomainToFolder: Record<string, string> = {
         'partner': 'partner-gym',
         'aurora': 'aurora',
-        'sushicat': 'sushicat'
+        'sushicat': 'sushicat',
+        'brickell': 'brickell'
       }
       internalName = subdomainToFolder[subdomain] || subdomain
     } else if (hostname === 'localhost' || hostname.startsWith('127.0.0.1') || hostname.startsWith('192.168')) {
