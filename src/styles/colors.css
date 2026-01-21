@@ -9,9 +9,9 @@
   --color-border: rgba(0, 0, 0, 0.08);
 
   /* Colores de marca - reemplazados por config.json del cliente */
-  --color-brand: #D6F800;          /* highlight color */
-  --color-brand-accent: #EFEFEF;   /* accent color */
-  --color-brand-hover: #EFEFEF;    /* hover color */
+  --color-brand: #a1674a;          /* highlight color */
+  --color-brand-accent: #d9b39a;   /* accent color */
+  --color-brand-hover: #33251c;    /* hover color */
 
   --focus-outline: rgba(0, 0, 0, 0.6);
 
