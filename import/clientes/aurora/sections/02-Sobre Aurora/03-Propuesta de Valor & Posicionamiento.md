@@ -1,0 +1,14 @@
+# Propuesta de Valor & Posicionamiento
+
+## Propuesta de Valor
+
+Una propuesta de valor es una declaración clara y directa que explica por qué las personas deberían elegirte sobre los demás. Destaca lo que hace única a tu marca, el valor real que ofreces y cómo solucionas las necesidades de tu audiencia, de manera simple y efectiva. 
+
+> Creamos experiencias que funcionan. Sin presión, sin poses, sin ruido innecesario. Diseñamos eventos bien pensados donde puedes llegar sola y la conexión sucede de forma natural. Espacios claros, humanos y reales, que se viven y se recuerdan.
+> 
+
+## Posicionamiento
+
+El Círculo Dorado es un marco de trabajo de branding desarrollado por Simon Sinek que ayuda a definir el núcleo de una marca comenzando por el por qué de su existencia (propósito), luego explicando cómo lleva ese propósito a la vida (proceso o diferenciadores) y finalmente describiendo qué ofrece (productos o servicios).
+
+![Slide 15.jpg](Propuesta%20de%20Valor%20&%20Posicionamiento/Slide_15.jpg)

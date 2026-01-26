@@ -1,0 +1,9 @@
+# Logo
+
+El logotipo de Aurora se construye a partir de curvas orgánicas y volúmenes suaves que transmiten fluidez, cercanía y apertura. El ritmo en sus letras aporta una sensación de movimiento y crecimiento, reflejando la energía de los encuentros y la dinámica natural de las conexiones humanas. La combinación de formas redondeadas con una estructura equilibrada genera una presencia visual clara, donde la elegancia sutil convive con un carácter corporativo accesible. En conjunto, el logo expresa la esencia de Aurora: un espacio diseñado para conectar, compartir y crear experiencias significativas.
+
+![Manual de uso_AUR_MANUAL_LOGO_01.png](Logo/Manual_de_uso_AUR_MANUAL_LOGO_01.png)
+
+![Manual de uso_AUR_MANUAL_LOGO_02.png](Logo/Manual_de_uso_AUR_MANUAL_LOGO_02.png)
+
+![Manual de uso_AUR_MANUAL_LOGO_03.png](Logo/Manual_de_uso_AUR_MANUAL_LOGO_03.png)
